@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TL Capability Map — Draft Sketch</title>
+<script>
+// FOUC prevention: apply theme before paint
+(function() {
+  var pref = localStorage.getItem('theme-preference') || 'auto';
+  var theme = pref === 'night' ? 'dark' : pref === 'day' ? 'light' : window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  document.documentElement.setAttribute('data-theme-preference', pref);
+})();
+</script>
+<style>
+  :root {
+    /*
+     * Visual Identity — WCAG AAA adapted
+     * Reference blue: #00049E | Grey: #706F6F | Black: #000000
+     * Secondary: #2C32FF #00B0F0 #00B4C4 #82CA9C #9185BE #B9BAFF
+     * Typography: Arial
+     */
+    --bg: #f4f4f4;
+    --surface: #ffffff;
+    --border: #d0d0cf;
+    --text: #000000;           /* 21:1 on --surface */
+    --text-secondary: #4a4a49; /* 7.7:1 on --surface */
+    --accent: #00049E;         /* 14.5:1 on --surface — the company reference blue */
+    --accent-light: #eef0fa;
+    --accent-on-light: #00049E;/* 13.2:1 on --accent-light */
+    /* Capability colors — derived from the company secondary palette */
+    --c1: #00049E;             /* the company blue */
+    --c1-light: #eef0fa;
+    --c1-on-light: #00049E;
+    --c2: #006b6b;             /* darkened teal for AAA — from #00B4C4 */
+    --c2-light: #e6f7f7;
+    --c2-on-light: #005555;
+    --c3: #1a1f99;             /* darkened vivid blue — from #2C32FF */
+    --c3-light: #ededfc;
+    --c3-on-light: #1a1f99;
+    --c4: #5a4a8a;             /* darkened purple — from #9185BE */
+    --c4-light: #f2f0f8;
+    --c4-on-light: #4a3d75;
+    --c5: #00698f;             /* darkened sky blue — from #00B0F0 */
+    --c5-light: #e6f4fa;
+    --c5-on-light: #005a7a;
+    --c6: #2d7a4a;             /* darkened green — from #82CA9C */
+    --c6-light: #edf7f1;
+    --c6-on-light: #1f6338;
+    --c7: #8a4500;             /* darkened amber — distinctive from other caps */
+    --c7-light: #fef3e6;
+    --c7-on-light: #6b3600;
+    --c8: #2d7a4a;             /* green — Design from Business */
+    --c8-light: #edf7f1;
+    --c8-on-light: #1f6338;
+    --c9: #7a2d5a;             /* plum — Write to Drive Decisions */
+    --c9-light: #f8edf4;
+    --c9-on-light: #5e1d45;
+    --c10: #8a4500;            /* amber — Lead the Conversation */
+    --c10-light: #fef3e6;
+    --c10-on-light: #6b3600;
+    --green: #1f6338;          /* check color */
+    --green-light: #edf7f1;
+    --green-on-light: #1f6338;
+    --focus: #00049E;
+    --bv-grey: #706F6F;
+    --radius: 6px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  [data-theme="dark"] {
+    --bg: #161616;
+    --surface: #1e1e1e;
+    --border: #333333;
+    --text: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent: #6b9fff;
+    --accent-light: #1a2433;
+    --accent-on-light: #8bb5ff;
+    --c1: #6b9fff; --c1-light: #1a2433; --c1-on-light: #8bb5ff;
+    --c2: #4dc9c0; --c2-light: #122928; --c2-on-light: #6dd8d0;
+    --c3: #7b88f0; --c3-light: #1a1d33; --c3-on-light: #99a4f5;
+    --c4: #b0a0d8; --c4-light: #221e30; --c4-on-light: #c8bbe5;
+    --c5: #50b8d8; --c5-light: #122530; --c5-on-light: #70c8e5;
+    --c6: #6db88a; --c6-light: #152a1c; --c6-on-light: #8dcc9f;
+    --c7: #d89048; --c7-light: #2a1f12; --c7-on-light: #e5a868;
+    --c8: #6db88a; --c8-light: #152a1c; --c8-on-light: #8dcc9f;
+    --c9: #cc88b5; --c9-light: #2a1525; --c9-on-light: #dda0cc;
+    --c10: #d89048; --c10-light: #2a1f12; --c10-on-light: #e5a868;
+    --green: #6db88a; --green-light: #152a1c; --green-on-light: #8dcc9f;
+    --focus: #6b9fff;
+    --bv-grey: #909090;
+    --shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+
+  [data-theme="dark"] .mermaid svg { filter: invert(0.88) hue-rotate(180deg) saturate(0.8); }
+
+  .transitions-enabled, .transitions-enabled * {
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+
+  /* Theme toggle */
+  .theme-toggle {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .theme-toggle button {
+    background: var(--surface);
+    color: var(--text-secondary);
+    border: none;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    font-family: inherit;
+    cursor: pointer;
+    border-right: 1px solid var(--border);
+  }
+  .theme-toggle button:last-child { border-right: none; }
+  .theme-toggle button[aria-pressed="true"] {
+    background: var(--accent);
+    color: #fff;
+  }
+  .theme-toggle button:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: -2px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* Skip link */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    z-index: 1000;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .skip-link:focus { top: 1rem; }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Focus visible for all interactive elements */
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* --- Layout: header + two equal panes --- */
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .page-header {
+    grid-column: 1 / -1;
+    padding: 1.5rem 1.75rem 0;
+    margin-bottom: 0;
+  }
+
+  .content-pane {
+    overflow-y: auto;
+    padding: 1rem 1.75rem 1.5rem;
+    min-width: 0;
+  }
+
+  .map-pane {
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 1.5rem 1.75rem;
+    box-shadow: -6px 0 16px rgba(0,0,0,0.04);
+  }
+  [data-theme="dark"] .map-pane {
+    box-shadow: -6px 0 16px rgba(0,0,0,0.2);
+  }
+
+  @media (max-width: 960px) {
+    .layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto 1fr;
+      height: auto;
+    }
+    .page-header { order: 1; }
+    .map-pane {
+      order: 2;
+      max-height: none;
+      overflow-y: visible;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04), 0 -4px 12px rgba(0,0,0,0.04);
+    }
+    [data-theme="dark"] .map-pane {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 -4px 12px rgba(0,0,0,0.2);
+    }
+    .content-pane { order: 3; overflow-y: visible; }
+  }
+
+  /* --- Header --- */
+  .page-header p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+  }
+
+  .page-header h1 { font-size: 1.35rem; font-weight: 700; }
+
+  .draft-badge {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+    margin-left: 0.4rem;
+  }
+
+  .page-header h1 { display: flex; align-items: center; gap: 0.4rem; }
+
+  .page-header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 1rem;
+    margin-bottom: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    z-index: 10;
+    position: relative;
+  }
+  [data-theme="dark"] .page-header {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }
+
+
+  /* --- Filters + theme toggle row --- */
+  .page-header .filters {
+    margin-bottom: 0;
+  }
+  .filters-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .filters {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filters-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-right: 0.25rem;
+  }
+
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* --- GitHub link --- */
+  .github-link {
+    color: var(--text-secondary);
+    transition: color 0.15s;
+    vertical-align: middle;
+    margin-left: 0.4rem;
+  }
+  .github-link:hover { color: var(--accent); }
+  .github-link svg { display: inline-block; vertical-align: middle; }
+
+  /* --- Map pane content --- */
+  .map-pane h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--accent);
+    border-bottom-width: 3px;
+    display: inline-block;
+  }
+
+  .map-pane h2::after {
+    content: '';
+    display: block;
+  }
+
+  .map-graph {
+    flex: 0 0 auto;
+    min-height: 420px;
+  }
+
+  .map-graph .mermaid {
+    display: flex;
+    justify-content: center;
+  }
+
+  .map-graph .mermaid svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .map-graph .mermaid .nodeLabel {
+    font-family: Arial, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+  }
+
+  .map-legend {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+    background: var(--bg);
+    border-radius: var(--radius);
+  }
+
+  .map-legend strong { color: var(--text); }
+
+  /* --- Books section in map pane --- */
+  .books-section {
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: auto;
+  }
+
+  .book-list { list-style: none; font-size: 0.82rem; }
+
+  .book-list li {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.4;
+  }
+
+  .book-list li:last-child { border-bottom: none; }
+
+  .book-short { font-weight: 700; color: var(--text); }
+  .book-caps { font-size: 0.72rem; color: var(--text-secondary); }
+
+  /* --- Capability Cards --- */
+  .capability {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.75rem;
+    box-shadow: var(--shadow);
+  }
+
+  .capability.completed { border-color: var(--c6); }
+
+  /* Card header — always visible */
+  .cap-header {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem 1.15rem;
+    gap: 0.75rem;
+  }
+
+  .cap-number {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .cap-number.c1 { background: var(--c1-light); color: var(--c1-on-light); }
+  .cap-number.c2 { background: var(--c2-light); color: var(--c2-on-light); }
+  .cap-number.c3 { background: var(--c3-light); color: var(--c3-on-light); }
+  .cap-number.c4 { background: var(--c4-light); color: var(--c4-on-light); }
+  .cap-number.c5 { background: var(--c5-light); color: var(--c5-on-light); }
+  .cap-number.c6 { background: var(--c6-light); color: var(--c6-on-light); }
+  .cap-number.c7 { background: var(--c7-light); color: var(--c7-on-light); }
+  .cap-number.c8 { background: var(--c8-light); color: var(--c8-on-light); }
+  .cap-number.c9 { background: var(--c9-light); color: var(--c9-on-light); }
+  .cap-number.c10 { background: var(--c10-light); color: var(--c10-on-light); }
+  .cap-number.c0 { background: var(--bg); color: var(--text-secondary); border: 1.5px solid var(--border); }
+
+  .cap-header-content { flex-grow: 1; min-width: 0; }
+
+  .cap-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cap-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    flex-grow: 1;
+  }
+
+  /* Checkbox */
+  .cap-check {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.3rem;
+    height: 1.3rem;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    background: var(--surface);
+  }
+
+  .cap-check:hover { border-color: var(--c6); }
+
+  .cap-check:checked {
+    background: var(--c6);
+    border-color: var(--c6);
+  }
+
+  .cap-check:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border: solid #fff;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+  }
+
+  /* Card body — situation, changes, ready — always visible */
+  .cap-body {
+    padding: 0 1.15rem 0.75rem;
+    padding-left: calc(1.15rem + 2rem + 0.75rem); /* align with text after number */
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    font-weight: 700;
+    margin: 0.75rem 0 0.3rem;
+  }
+
+  .section-label:first-child { margin-top: 0; }
+
+  .prose { font-size: 0.9rem; line-height: 1.6; }
+
+  .ready-box {
+    background: var(--green-light);
+    border-left: 3px solid var(--c6);
+    padding: 0.6rem 0.85rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 0.88rem;
+    color: var(--c6-on-light);
+    margin-top: 0.5rem;
+  }
+
+  /* --- Collapsible subsections --- */
+  .subsection { border-top: 1px solid var(--border); }
+
+  .subsection-toggle {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.65rem 1.15rem;
+    padding-left: calc(1.15rem + 2rem + 0.75rem);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    gap: 0.4rem;
+    text-align: left;
+  }
+
+  .subsection-toggle:hover { color: var(--text); }
+
+  .subsection-chevron {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    transition: transform 0.15s;
+    fill: currentColor;
+  }
+
+  .subsection[aria-expanded="true"] .subsection-chevron { transform: rotate(90deg); }
+
+  .subsection-count {
+    font-weight: 500;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-left: auto;
+  }
+
+  .subsection-body {
+    display: none;
+    padding: 0 1.15rem 0.85rem;
+    padding-left: calc(1.15rem + 2rem + 0.75rem);
+  }
+
+  .subsection[aria-expanded="true"] .subsection-body { display: block; }
+
+  /* --- Resource Cards --- */
+  .resources { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .resource {
+    display: flex;
+    gap: 0.65rem;
+    padding: 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    align-items: flex-start;
+  }
+
+  .resource:hover { border-color: var(--accent); }
+  .resource.hidden { display: none; }
+
+  .format-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .format-badge.video { background: var(--c1-light); color: var(--c1-on-light); }
+  .format-badge.article { background: var(--c6-light); color: var(--c6-on-light); }
+  .format-badge.podcast { background: var(--c4-light); color: var(--c4-on-light); }
+  .format-badge.guide { background: var(--c5-light); color: var(--c5-on-light); }
+  .format-badge.research { background: var(--c2-light); color: var(--c2-on-light); }
+  .format-badge.book { background: var(--c3-light); color: var(--c3-on-light); }
+
+  .resource-info { flex-grow: 1; min-width: 0; }
+
+  .resource-title { font-weight: 600; font-size: 0.88rem; }
+
+  .resource-title a { color: var(--text); text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 2px; }
+  .resource-title a:hover { text-decoration-color: var(--accent); color: var(--accent); }
+
+  .resource-author { font-size: 0.78rem; color: var(--text-secondary); }
+  .resource-desc { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem; }
+  .resource-time { font-size: 0.75rem; color: var(--text-secondary); flex-shrink: 0; white-space: nowrap; margin-top: 0.15rem; }
+
+  /* --- Practice box --- */
+  .practice-box {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    padding: 0.6rem 0.85rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 0.88rem;
+    color: var(--accent-on-light);
+  }
+
+  /* --- Footer --- */
+  footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .reset-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.3rem 0.7rem;
+    font-size: 0.72rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .content-pane { padding: 0.75rem; }
+    .map-pane { padding: 1rem; }
+    .cap-body, .subsection-toggle, .subsection-body { padding-left: 0.75rem; }
+    .resource { flex-wrap: wrap; }
+    .resource-time { width: 100%; margin-top: 0.2rem; }
+    .page-header h1 { font-size: 1.15rem; }
+    .page-header p { font-size: 0.8rem; }
+    .page-header { padding: 0.75rem 0.75rem 0; }
+    .filters { gap: 0.3rem; }
+    .filter-btn { padding: 0.25rem 0.55rem; font-size: 0.72rem; }
+    .theme-toggle button { padding: 0.25rem 0.55rem; font-size: 0.72rem; }
+    .cap-header { gap: 0.5rem; }
+    .cap-number { width: 32px; height: 32px; font-size: 0.85rem; }
+    .cap-title { font-size: 0.95rem; }
+    .section-label { font-size: 0.65rem; }
+    .prose { font-size: 0.85rem; }
+    .subsection-toggle { font-size: 0.8rem; }
+    footer { font-size: 0.7rem; flex-wrap: wrap; gap: 0.5rem; }
+    .github-link svg { width: 18px; height: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div class="layout">
+  <header class="page-header" id="main-content">
+    <h1>TL Capability Map <span class="draft-badge">Draft Sketch</span> <a href="https://github.com/cristoslc/tl-learning-plan" class="github-link" aria-label="View source on GitHub" title="View source on GitHub"><svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></h1>
+    <p>A capability-based program for Tech Leads moving from application expertise to architectural thinking. Each capability has a situation, curated resources, and a practice exercise. Start with <strong>Capability 1</strong> or jump to whatever your team needs most.</p>
+    <div class="filters-row">
+      <nav class="filters" aria-label="Filter resources by format">
+        <span class="filters-label" id="filter-label">Show:</span>
+        <button class="filter-btn" aria-pressed="true" data-filter="all" aria-describedby="filter-label">All</button>
+        <button class="filter-btn" aria-pressed="false" data-filter="video" aria-describedby="filter-label">Video</button>
+        <button class="filter-btn" aria-pressed="false" data-filter="article" aria-describedby="filter-label">Article</button>
+        <button class="filter-btn" aria-pressed="false" data-filter="podcast" aria-describedby="filter-label">Podcast</button>
+        <button class="filter-btn" aria-pressed="false" data-filter="book" aria-describedby="filter-label">Book</button>
+      </nav>
+      <div class="theme-toggle" role="group" aria-label="Theme preference">
+        <button data-theme-btn="day" aria-pressed="false">Day</button>
+        <button data-theme-btn="night" aria-pressed="false">Night</button>
+        <button data-theme-btn="auto" aria-pressed="true">Auto</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="content-pane" role="main">
+
+    <div id="capabilities" role="list" aria-label="Capabilities"></div>
+
+    <footer>
+      <span>TL Development Program &mdash; Draft Sketch, March 2026 &middot; <a href="https://github.com/cristoslc/tl-learning-plan" style="color: var(--accent);">Source on GitHub</a></span>
+      <button class="reset-btn" onclick="resetProgress()" aria-label="Reset all progress">Reset progress</button>
+    </footer>
+  </main>
+
+  <aside class="map-pane" aria-label="Capability map and reference">
+    <h2>How they connect</h2>
+    <div class="map-graph" id="capability-graph">
+<pre class="mermaid">
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#eef0fa',
+    'primaryBorderColor': '#00049E',
+    'primaryTextColor': '#00049E',
+    'lineColor': '#706F6F',
+    'fontSize': '13px',
+    'fontFamily': 'Arial, sans-serif',
+    'edgeLabelBackground': '#ffffff'
+  }
+}}%%
+graph TD
+    C1["1. Smell-Test Claims"]
+    C2["2. Find Boundaries"]
+    C3["3. Pressure-Test"]
+    C6["6. Strategic Map"]
+    C4["4. Think in Production"]
+    C5["5. Data Product Thinking"]
+    C7["7. Scope the Problem"]
+    C8["8. Design from the Business"]
+    C9["9. Lead the Conversation"]
+    C10["10. Write to Drive Decisions"]:::alongside
+    C11["11. AI Partner"]:::alongside
+
+    C1 --> C3
+    C1 --> C2
+    C2 <-.-> C3
+    C3 <-.-> C4
+    C2 --> C5
+    C5 --> C8
+    C4 -.-> C8
+    C6 --> C8
+    C7 --> C8
+    C6 --> C9
+    C8 --> C9
+
+    classDef default fill:#eef0fa,stroke:#00049E,stroke-width:2px,color:#00049E,font-weight:700,rx:20,ry:20
+    classDef alongside fill:#f8f8f8,stroke:#706F6F,stroke-width:1.5px,stroke-dasharray:5 4,color:#4a4a49,font-weight:600,rx:20,ry:20
+
+    style C2 fill:#e6f7f7,stroke:#006b6b,color:#005555
+    style C3 fill:#ededfc,stroke:#1a1f99,color:#1a1f99
+    style C4 fill:#f2e6e9,stroke:#8a1538,color:#6b0f2a
+    style C5 fill:#f2f0f8,stroke:#5a4a8a,color:#4a3d75
+    style C6 fill:#e6f4fa,stroke:#00698f,color:#005a7a
+    style C7 fill:#fef3e6,stroke:#8a4500,color:#6b3600
+    style C8 fill:#edf7f1,stroke:#2d7a4a,color:#1f6338
+    style C9 fill:#fef3e6,stroke:#8a4500,color:#6b3600
+    style C10 fill:#f8edf4,stroke:#7a2d5a,color:#5e1d45
+</pre>
+<!-- old SVG nodes removed - Mermaid handles rendering now -->
+</svg>
+    </div>
+
+    <div class="map-legend">
+<strong>1. Smell-Test Claims</strong> is the gateway. <strong>2. Find Boundaries</strong> and <strong>3. Pressure-Test</strong> are the core analysis pair; <strong>4. Think in Production</strong> extends 3 into operational thinking. <strong>5. Data Product Thinking</strong> builds on 2 &mdash; once you have boundaries, design what crosses them. <strong>6. Strategic Map</strong> and <strong>7. Scope the Problem</strong> feed <strong>8. Design from the Business</strong>: strategic context and problem scoping flowing into applied platform design. <strong>9. Lead the Conversation</strong> is the capstone &mdash; leading conversations, co-designing, educating. <strong>10. Write to Drive Decisions</strong> and <strong>11. AI Partner</strong> are force multipliers you use alongside everything.
+    </div>
+
+    <div class="books-section">
+      <h2>Books (O'Reilly Learning)</h2>
+      <p class="sidebar-note" style="margin-bottom:0.5rem;">Specific chapters are linked in each capability&rsquo;s Go Deeper section.</p>
+      <ul class="book-list">
+        <li><em>Software Architecture: The Hard Parts</em> &mdash; Ford, Richards, Sadalage, Dehghani</li>
+        <li><em>Building Evolutionary Architectures</em> 2nd ed &mdash; Ford, Parsons, Kua, Sadalage</li>
+        <li><em>Data Mesh</em> &mdash; Dehghani</li>
+        <li><em>Designing Data-Intensive Applications</em> 2nd ed &mdash; Kleppmann & Riccomini</li>
+        <li><em>Fundamentals of Software Architecture</em> &mdash; Richards & Ford</li>
+        <li><em>The Software Architect Elevator</em> &mdash; Hohpe</li>
+        <li><em>An Elegant Puzzle</em> &mdash; Larson</li>
+      </ul>
+    </div>
+  </aside>
+</div>
+
+<script>
+const DATA = [
+  {
+    id: 1, cls: "c1",
+    title: "Smell-Test an Architectural Claim",
+    situation: "Someone in a design review says \u201cwe need microservices for scalability\u201d or \u201cevent sourcing is the right pattern here.\u201d It sounds reasonable. You\u2019re not sure if it actually is, but you don\u2019t have a way to push on it without sounding like you\u2019re just being difficult.",
+    changes: "You develop a reflex: <em>what kind of claim is this?</em> Some claims are backed by decades of evidence (tight coupling increases change cost). Some are patterns that work in specific contexts (event sourcing\u2009\u2014\u2009when you need audit trails and temporal queries). Some are rules of thumb being stated as laws. Some are conference hype. The response is different for each. You stop asking \u201cis this right?\u201d and start asking \u201cwhat would have to be true for this to be right?\u201d",
+    ready: "You hear an architectural assertion in a meeting and your first instinct is to classify it, not accept or reject it. You can say \u201cthat\u2019s a reasonable pattern\u2009\u2014\u2009what\u2019s the context that makes it fit here?\u201d without preparation.",
+    practice: "Pick any claim from the architecture proposal (or from a recent design conversation). Write down: what kind of claim is this? What evidence would support it? What context would it need to be true? Bring your analysis to a session.",
+    startResources: [
+      { title: "How to Think Like an Architect", author: "Mark Richards", url: "https://www.youtube.com/watch?v=W7Krz__jJUg", format: "video", time: "45 min", desc: "The \u201ctriangle of knowledge\u201d\u2009\u2014\u2009knowing what you don\u2019t know\u2009\u2014\u2009and how to translate business needs into architectural characteristics.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/how-to-think-like-an-architect-mark-richards.md" },
+      { title: "\u201cGood Enough\u201d Architecture", author: "Stefan Tilkov", url: "https://www.youtube.com/watch?v=PzEox3szeRc", format: "video", time: "42 min", desc: "Six real architectures that went wrong. Calibrates your instincts for too much vs too little architectural ambition.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/good-enough-architecture-stefan-tilkov.md" },
+    ],
+    deeperResources: [
+      { title: "Thinking Like an Architect", author: "Gregor Hohpe", url: "https://www.infoq.com/presentations/architect-lessons/", format: "video", time: "50 min", desc: "Two decades of practice distilled: decision models, blind spots, bridging organizational layers.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/thinking-like-an-architect-gregor-hohpe.md" },
+      { title: "Software Architecture: The Hard Parts", author: "Neal Ford & Mark Richards", url: "https://www.infoq.com/podcasts/software-architecture-hard-parts/", format: "podcast", time: "37 min", desc: "The two laws: \u201ceverything is a trade-off\u201d and \u201cwhy is more important than how.\u201d" },
+      { title: "Is High Quality Software Worth the Cost?", author: "Martin Fowler", url: "https://martinfowler.com/articles/is-quality-worth-cost.html", format: "article", time: "15 min", desc: "Internal quality reduces cost over time\u2009\u2014\u2009subverts the \u201cquality vs. speed\u201d framing." },
+      { title: "The Elephant in the Architecture", author: "Fowler & Boeckeler", url: "https://martinfowler.com/articles/value-architectural-attribute.html", format: "article", time: "20 min", desc: "Business value as the most overlooked factor in architectural assessment." },
+      { title: "Developer to Architect \u2014 Lesson Series", author: "Mark Richards", url: "https://developertoarchitect.com/lessons/", format: "video", time: "10 min each", desc: "200+ bite-sized architecture lessons. Browse and pick what\u2019s relevant." },
+      { title: "FSA Ch 2: Architectural Thinking", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch02.html", format: "book", time: "~45 min", desc: "Goes deeper than the Richards talk: how architects and developers should collaborate, technical breadth vs depth, analyzing trade-offs, and understanding business drivers." },
+      { title: "FSA Ch 4: Architecture Characteristics Defined", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch04.html", format: "book", time: "~30 min", desc: "Systematic framework for the \u201c-ilities\u201d \u2014 operational, structural, and cross-cutting. New material: how to select the fewest characteristics necessary to avoid over-engineering." },
+      { title: "BEA Ch 8: Pitfalls and Antipatterns", author: "Ford, Parsons et al.", url: "https://learning.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/ch08.html", format: "book", time: "~40 min", desc: "Pattern recognition for bad claims: Vendor King, Last 10% Trap, resume-driven development, inappropriate governance. Once you\u2019ve read this, you\u2019ll spot these in the wild." },
+    ]
+  },
+  {
+    id: 2, cls: "c2",
+    title: "Find the Real Boundaries",
+    situation: "You\u2019re looking at a system design and it has boxes with names. Modules, services, components. Are these <em>real</em> boundaries (different domains with different rules and different data) or just feature groupings someone drew to organize a slide deck?",
+    changes: "You learn to test boundaries with three questions: Does it own its data? Would a different team draw the same line? How much does it need to talk across the boundary to do its job? Fake boundaries fail at least one. You also learn that the number of boxes is not a quality signal\u2009\u2014\u200930 modules isn\u2019t better or worse than 7 until you know why each boundary exists.",
+    ready: "You can point to a specific boundary and say \u201cthis one is real because [data ownership / independent change / minimal cross-talk]\u201d or \u201cthis one is suspicious because [shared database / high coupling / org-chart-driven].\u201d",
+    practice: "Take 3 of the architecture proposal\u2019s 30+ modules. For each: does it own its data? Would a team that didn\u2019t know about the architecture team's slide deck still draw this boundary? What cross-boundary communication does it need? Write up your assessment.",
+    startResources: [
+      { title: "Bounded Context", author: "Martin Fowler", url: "https://martinfowler.com/bliki/BoundedContext.html", format: "article", time: "10 min", desc: "Concise definition with examples of how \u201cproduct\u201d and \u201ccustomer\u201d mean different things in different contexts." },
+      { title: "DDD & Microservices: At Last, Some Boundaries!", author: "Eric Evans", url: "https://www.youtube.com/watch?v=yPvef9R3k-M", format: "video", time: "50 min", desc: "The inventor of bounded contexts on how they give services real isolation.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/ddd-microservices-at-last-some-boundaries-eric-evans.md" },
+    ],
+    deeperResources: [
+      { title: "50,000 Orange Stickies Later", author: "Alberto Brandolini", url: "https://youtu.be/1i6QYvYhlYQ", format: "video", time: "50 min", desc: "EventStorming\u2009\u2014\u2009a workshop technique where boundaries emerge from mapping business events.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/50000-orange-stickies-later-alberto-brandolini.md" },
+      { title: "Practical DDD: Bounded Contexts + Events", author: "Indu Alagarsamy", url: "https://www.infoq.com/presentations/microservices-ddd-bounded-contexts/", format: "video", time: "50 min", desc: "Worked e-commerce example showing how events achieve autonomous services.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/practical-ddd-bounded-contexts-events-microservices-indu-alagarsamy.md" },
+      { title: "Bounded Context Canvas V3", author: "Nick Tune", url: "https://medium.com/nick-tune-tech-strategy-blog/bounded-context-canvas-v2-simplifications-and-additions-229ed35f825f", format: "article", time: "15 min", desc: "Workshop tool for mapping what a context owns, its communication, and business alignment." },
+      { title: "Identify Microservice Boundaries", author: "Azure Architecture Center", url: "https://learn.microsoft.com/en-us/azure/architecture/microservices/model/microservice-boundaries", format: "article", time: "20 min", desc: "Step-by-step guidance using domain analysis. Prescriptive and concrete." },
+      { title: "Vaughn Vernon on Strategic Monoliths", author: "SE Radio #495", url: "https://se-radio.net/2022/01/episode-495-vaughn-vernon-on-strategic-monoliths-and-microservices/", format: "podcast", time: "60 min", desc: "How bounded contexts inform whether you need microservices at all." },
+      { title: "Hard Parts Ch 5: Component-Based Decomposition Patterns", author: "Ford, Richards et al.", url: "https://learning.oreilly.com/library/view/software-architecture-the/9781492086888/ch05.html", format: "book", time: "~90 min", desc: "Six-step process for extracting services from a monolith: identify components, gather common domains, flatten, map dependencies, create domains, extract services. The most detailed decomposition guide available." },
+      { title: "Hard Parts Ch 7: Service Granularity", author: "Ford, Richards et al.", url: "https://learning.oreilly.com/library/view/software-architecture-the/9781492086888/ch07.html", format: "book", time: "~45 min", desc: "The disintegrators/integrators framework \u2014 structured reasons to split (volatility, scalability, fault tolerance) vs keep together (transactions, shared data, workflows). Directly applicable to evaluating the architecture team's 30+ modules." },
+      { title: "FSA Ch 7: Scope of Architecture Characteristics", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch07.html", format: "book", time: "~30 min", desc: "Introduces the \u201carchitecture quantum\u201d \u2014 the independently deployable unit with high functional cohesion. Changes how you think about where characteristics apply: not system-wide, but per quantum." },
+    ]
+  },
+  {
+    id: 3, cls: "c3",
+    title: "Pressure-Test a Design",
+    situation: "A proposed architecture looks clean on paper. Nobody\u2019s asking hard questions because it\u2019s early and everyone wants to move forward. But you\u2019ve seen \u201cclean on paper\u201d before\u2009\u2014\u2009the last system looked clean once too.",
+    changes: "You learn that non-functional requirements are the pressure. Not vague ones (\u201cit should be fast\u201d) but specific ones (\u201cfield inspectors need to sync over 3G with P95 under 200ms\u201d). Each real NFR rules out options and constrains others. You stop evaluating designs by how they look and start evaluating them by what would break them. You also learn fitness functions\u2009\u2014\u2009automated tests for architectural properties, so drift is caught by CI, not by a crisis.",
+    ready: "Given a design, you can name the top 3 quality attributes that would stress it, explain which part is most vulnerable to each, and sketch how you\u2019d test for it.",
+    practice: "Pick one quality attribute that matters for the new platform (offline sync? multi-tenancy? data freshness?). Write it as a specific, measurable scenario. Then trace through the architecture proposal: which component would this break first?",
+    startResources: [
+      { title: "Lesson 73: Architecture Fitness Functions", author: "Mark Richards", url: "https://developertoarchitect.com/lessons/lesson73.html", format: "video", time: "10 min", desc: "Short, focused: what fitness functions are and how they protect architectural characteristics." },
+      { title: "Lesson 37: Translating Quality Attributes", author: "Mark Richards", url: "https://developertoarchitect.com/lessons/lesson37.html", format: "video", time: "10 min", desc: "How to translate the \u201c-ilities\u201d into language business stakeholders understand." },
+    ],
+    deeperResources: [
+      { title: "Building Evolutionary Architectures", author: "Parsons, Ford & Lewis", url: "https://gotopia.tech/episodes/232/building-evolutionary-architectures", format: "video", time: "55 min", desc: "The co-authors on evolutionary architecture and fitness functions as governance." },
+      { title: "Fitness Function-Driven Development", author: "ThoughtWorks", url: "https://www.thoughtworks.com/en-us/insights/articles/fitness-function-driven-development", format: "article", time: "15 min", desc: "Making fitness functions first-class in the dev cycle\u2009\u2014\u2009testable, automatable." },
+      { title: "15 Years of ATAM Data", author: "InfoQ", url: "https://www.infoq.com/articles/atam-quality-attributes/", format: "article", time: "20 min", desc: "Empirical: modifiability, performance, availability, and deployability drive real trade-offs." },
+      { title: "Evolutionary Architecture", author: "Rebecca Parsons", url: "https://www.infoq.com/podcasts/evolutionary-architecture-evolution/", format: "podcast", time: "35 min", desc: "How fitness functions matured in practice between BEA editions." },
+      { title: "Software Architecture: The Hard Parts", author: "Neal Ford & Mark Richards", url: "https://gotopia.tech/episodes/213/software-architecture-the-hard-parts", format: "video", time: "55 min", desc: "Trade-off analysis: service granularity, orchestration, distributed transactions." },
+      { title: "BEA Ch 2: Fitness Functions", author: "Ford, Parsons et al.", url: "https://learning.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/ch02.html", format: "book", time: "~45 min", desc: "Extends Richards\u2019 Lesson 73 with the full taxonomy: atomic vs holistic, triggered vs continual, static vs dynamic, automated vs manual. The complete framework behind the 10-minute intro." },
+      { title: "BEA Ch 4: Automating Architectural Governance", author: "Ford, Parsons et al.", url: "https://learning.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/ch04.html", format: "book", time: "~60 min", desc: "New material: code-level fitness functions with ArchUnit, coupling metrics, linters as governance, DevOps integration. Case study of restructuring architecture while deploying 60 times/day." },
+      { title: "BEA Ch 7: Building Evolvable Architectures", author: "Ford, Parsons et al.", url: "https://learning.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/ch07.html", format: "book", time: "~45 min", desc: "New material: anti-corruption layers, sacrificial architectures, last responsible moment, Postel\u2019s Law. Greenfield principles directly relevant to the new platform." },
+    ]
+  },
+  {
+    id: 4, cls: "c4",
+    title: "Think in Production",
+    situation: "The architecture looks good on the whiteboard. The design review passed. Then it ships, and you discover there\u2019s no way to tell if offline sync is silently dropping records, no runbook for when the data pipeline stalls, and the only person who knows how the reconciliation service works is on vacation.",
+    changes: "You learn to design for day 2, not just day 1. Every service needs answers to: how do I know it\u2019s healthy? How do I know it\u2019s broken? What does the operator do when it breaks? How do I deploy a fix without downtime? You stop treating observability and operability as things you add after launch and start treating them as constraints that shape the design.",
+    ready: "Given a proposed service, you can sketch its health signals (what to monitor), its failure modes (what breaks and how you\u2019d know), and its recovery path (what the operator does). You push back on designs that can\u2019t answer these questions.",
+    practice: "Pick one platform service from the the new platform investment map (e.g., offline sync, data extrapolation). Answer: What are its health signals? How would an operator know it\u2019s silently failing? What\u2019s the recovery procedure? What happens to upstream/downstream services when it\u2019s down? If you can\u2019t answer these, that\u2019s the gap.",
+    startResources: [
+      { title: "Lesson 37: Translating Quality Attributes", author: "Mark Richards", url: "https://developertoarchitect.com/lessons/lesson37.html", format: "video", time: "10 min", desc: "Translating the \u201c-ilities\u201d into operational concerns that stakeholders understand. Bridges design intent to production reality." },
+      { title: "Monitoring Distributed Systems", author: "Google SRE Book (Ch 6)", url: "https://sre.google/sre-book/monitoring-distributed-systems/", format: "article", time: "20 min", desc: "The four golden signals (latency, traffic, errors, saturation) and why \u201cyour monitoring should answer two questions: what\u2019s broken, and why?\u201d Free chapter from the Google SRE book." },
+    ],
+    deeperResources: [
+      { title: "Implementing Service Level Objectives", author: "Google SRE Book (Ch 4)", url: "https://sre.google/sre-book/service-level-objectives/", format: "article", time: "25 min", desc: "How to define SLIs, SLOs, and SLAs so you have objective measures of service health, not just gut feel." },
+      { title: "Building Evolutionary Architectures", author: "Parsons, Ford & Lewis", url: "https://gotopia.tech/episodes/232/building-evolutionary-architectures", format: "video", time: "55 min", desc: "Fitness functions as automated operational governance \u2014 catching architectural drift in CI, not in production incidents." },
+      { title: "BEA Ch 4: Automating Architectural Governance", author: "Ford, Parsons et al.", url: "https://learning.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/ch04.html", format: "book", time: "~60 min", desc: "Code-level fitness functions with ArchUnit, coupling metrics, linters as governance. Making architectural properties testable in the deployment pipeline." },
+      { title: "DDIA 2e Ch 9: The Trouble with Distributed Systems", author: "Kleppmann & Riccomini", url: "https://learning.oreilly.com/library/view/designing-data-intensive-applications/9781098119058/ch09.html", format: "book", time: "~60 min", desc: "Everything that can go wrong: unreliable networks, unreliable clocks, process pauses. Essential for understanding why distributed systems fail in ways monoliths don\u2019t." },
+    ]
+  },
+  {
+    id: 5, cls: "c5",
+    title: "Data Product Thinking",
+    situation: "A domain in your system produces data that other domains, other teams, or external consumers need. Right now it\u2019s a database table someone queries directly, or a CSV export, or an API that returns whatever the producer decided to expose. When the schema changes, consumers break. When the data is wrong, nobody knows until a report looks funny.",
+    changes: "You learn to treat data that crosses a boundary as a product \u2014 something with an owner, a contract, a quality guarantee, and a versioning strategy. Not every output needs this treatment, but when a capability produces data for others to consume, you apply a specific design discipline: who owns it, who can discover it, what freshness and accuracy guarantees does it carry, and how does it evolve without breaking consumers.",
+    ready: "You can look at a data flow that crosses a domain boundary and say \u201cthis should be a data product because [multiple consumers / quality matters / schema will evolve]\u201d or \u201cthis doesn\u2019t need product treatment because [single consumer / internal to the domain].\u201d You can name the DAUTNIVS attributes and apply them to a real output.",
+    practice: "Pick a data flow in the new platform that crosses a domain boundary \u2014 e.g., data flowing from one domain into another for processing. Apply the DAUTNIVS checklist: Is it Discoverable? Addressable? Understandable without calling the producer? Does it have Trustworthiness guarantees (freshness, accuracy)? Is it Natively accessible in the consumer\u2019s preferred format? Interoperable with other data products? Valuable on its own? Secure? Where does it fall short, and what would you change?",
+    startResources: [
+      { title: "Data Mesh Principles and Logical Architecture", author: "Zhamak Dehghani", url: "https://martinfowler.com/articles/data-mesh-principles.html", format: "article", time: "45 min", desc: "The four data mesh principles and DAUTNIVS \u2014 the 8 attributes that define a real data product. The canonical reference for what \u201cdata product\u201d actually means." },
+      { title: "Data Mesh Paradigm Shift", author: "Zhamak Dehghani", url: "https://www.infoq.com/presentations/data-mesh-paradigm/", format: "video", time: "50 min", desc: "Dehghani\u2019s foundational talk. Same principles as the article but with visuals showing how domain-oriented data ownership works in practice." },
+    ],
+    deeperResources: [
+      { title: "Dehghani Ch 3: Principle of Data as a Product", author: "Zhamak Dehghani", url: "https://learning.oreilly.com/library/view/data-mesh/9781492092384/ch03.html", format: "book", time: "~45 min", desc: "The full DAUTNIVS treatment: what each attribute means, how to assess it, and what \u201cownership\u201d looks like for a data product. When the architecture team says \u201cdata product,\u201d this is how you test whether they mean what Dehghani means." },
+      { title: "Dehghani Ch 11: Design a Data Product by Affordances", author: "Zhamak Dehghani", url: "https://learning.oreilly.com/library/view/data-mesh/9781492092384/ch11.html", format: "book", time: "~45 min", desc: "The data product as architectural quantum \u2014 the smallest independently deployable unit. Covers ownership, interfaces, contracts, and quality guarantees." },
+      { title: "Dehghani Ch 9: The Logical Architecture", author: "Zhamak Dehghani", url: "https://learning.oreilly.com/library/view/data-mesh/9781492092384/ch09.html", format: "book", time: "~40 min", desc: "How domains, data products, and platform planes interact as a system. Maps directly onto the three-layer model: business capabilities own domains, platform services support the planes, data products are the outputs." },
+      { title: "Data Mesh Revisited", author: "Dehghani, Parsons et al.", url: "https://www.thoughtworks.com/insights/podcasts/technology-podcasts/data-mesh-revisited", format: "podcast", time: "50 min", desc: "Honest assessment three years later \u2014 what worked, what was hard, where data product thinking has matured." },
+      { title: "Hard Parts Ch 14: Managing Analytical Data", author: "Ford, Richards et al.", url: "https://learning.oreilly.com/library/view/software-architecture-the/9781492086888/ch14.html", format: "book", time: "~40 min", desc: "Data mesh applied to the Sysops Squad case study. Compares data warehouse, data lake, and data mesh approaches with concrete trade-offs." },
+    ]
+  },
+  {
+    id: 6, cls: "c6",
+    title: "Read the Strategic Map",
+    situation: "Leadership standardizes on C#, pursues MDM, invests in data products. You can repeat the decision but you can\u2019t explain <em>why</em> it was made, which means you can\u2019t use it to inform your own technical choices.",
+    changes: "You build a mental model of the company\u2019s strategic bets: why the new platform exists (not a rewrite\u2009\u2014\u2009a different architectural bet), why data products matter (domain outputs are feedstock, not finished goods), why language standardization has a business rationale beyond preference.",
+    ready: "Someone asks \u201cwhy are we building the new platform instead of improving the legacy platform?\u201d and you can give a clear, accurate, 2-minute answer without checking notes.",
+    practice: "Pick one of the company\u2019s strategic bets. Write a 2-minute explanation of <em>why</em>\u2009\u2014\u2009not what the decision is, but what problem it solves. Test it on a colleague.",
+    startResources: [
+      { title: "Engineering strategy", author: "Will Larson", url: "https://lethain.com/engineering-strategy/", format: "article", time: "15 min", desc: "How strategy actually forms: accumulated design decisions synthesized into direction. Not top-down visionary planning \u2014 bottom-up sense-making." },
+      { title: "Things You Should Never Do, Part I", author: "Joel Spolsky", url: "https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/", format: "article", time: "10 min", desc: "The classic argument against rewrites. Read this first, then the counterpoint next \u2014 together they frame the new platform\u2019s \u201cbuild alongside, don\u2019t throw away\u201d approach." },
+      { title: "Lessons from 6 Software Rewrite Stories", author: "Herb Caudill", url: "https://medium.com/@herbcaudill/lessons-from-6-software-rewrite-stories-635e4c8f7c22", format: "article", time: "25 min", desc: "The counterpoint: six real rewrites (Basecamp, VS Code, Gmail/Inbox) show that building new alongside old often works. the new platform\u2019s approach fits this pattern." },
+    ],
+    deeperResources: [
+      { title: "Is High Quality Software Worth the Cost?", author: "Martin Fowler", url: "https://martinfowler.com/articles/is-quality-worth-cost.html", format: "article", time: "15 min", desc: "Why internal quality reduces cost over time. The best single article for explaining platform investment to non-technical stakeholders." },
+      { title: "Technical Debt Quadrant", author: "Martin Fowler", url: "https://martinfowler.com/bliki/TechnicalDebtQuadrant.html", format: "article", time: "5 min", desc: "The 2x2 matrix (reckless/prudent vs deliberate/inadvertent) \u2014 vocabulary for explaining which kind of debt you\u2019re dealing with." },
+      { title: "Presenting to executives", author: "Will Larson", url: "https://lethain.com/presenting-to-executives/", format: "article", time: "10 min", desc: "Business value \u2192 historical narrative \u2192 explicit ask. The simplest framework for presenting technical decisions to leadership." },
+      { title: "Building an effective technical strategy", author: "Sarah Wells", url: "https://leaddev.com/leadingeng-london-2023/video/building-effective-technical-strategy", format: "video", time: "30 min", desc: "How to prioritize, document, and communicate strategy so people can use it to make decisions." },
+      { title: "ThoughtWorks Technology Radar", author: "ThoughtWorks", url: "https://www.thoughtworks.com/radar", format: "guide", time: "20 min", desc: "The Adopt/Trial/Assess/Hold framework for evaluating and standardizing on technologies. Study the methodology." },
+      { title: "The Platform and Program Split at Uber", author: "Gergely Orosz", url: "https://newsletter.pragmaticengineer.com/p/program-platform-split-uber", format: "article", time: "30 min", desc: "How Uber structured platform teams vs program teams. Case study of standardization through platform ownership." },
+      { title: "Agile Master Data Management", author: "Scott Ambler", url: "https://agiledata.org/essays/masterdatamanagement.html", format: "article", time: "20 min", desc: "What MDM is, why enterprises pursue it. Practical, vendor-neutral \u2014 explains why the company cares about shared definitions of \u201casset\u201d and \u201cbuilding.\u201d" },
+      { title: "Bottleneck #01: Tech Debt", author: "Martin Fowler et al.", url: "https://martinfowler.com/articles/bottlenecks-of-scaleups/01-tech-debt.html", format: "article", time: "25 min", desc: "Organizational patterns for managing tech debt as a strategic concern: auditing, ownership, tiger teams." },
+      { title: "Data Monolith to Mesh", author: "Zhamak Dehghani", url: "https://martinfowler.com/articles/data-monolith-to-mesh.html", format: "article", time: "30 min", desc: "The strategic \u201cwhy\u201d of domain-oriented data ownership. Included for context, not the technical \u201chow\u201d (which is in Cap 5)." },
+      { title: "Hohpe Ch 9: Architecture Is Selling Options", author: "Gregor Hohpe", url: "https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch09.html", format: "book", time: "~20 min", desc: "Every technology decision is buying an option. Not \u201cis C# good?\u201d but \u201cwhat does C# preserve and what does it foreclose?\u201d The framework for evaluating any strategic technology commitment." },
+      { title: "Hohpe Ch 6: Making Decisions", author: "Gregor Hohpe", url: "https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch06.html", format: "book", time: "~20 min", desc: "How architects frame decisions in complex environments. Pairs with Ch 9 \u2014 one is the framing, the other is the evaluation method." },
+      { title: "Hohpe Ch 15: A4 Paper Doesn\u2019t Stifle Creativity", author: "Gregor Hohpe", url: "https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch15.html", format: "book", time: "~15 min", desc: "Standards enable rather than restrict. The constructive framing for explaining why organizations standardize on a language or platform." },
+      { title: "Hohpe Ch 26: Reverse Engineering Organizations", author: "Gregor Hohpe", url: "https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch26.html", format: "book", time: "~20 min", desc: "Applying architectural analysis to understand why an organization makes the decisions it does. The diagnostic skill behind \u201cread the strategic map.\u201d" },
+      { title: "Larson \u00a73.3: Visions and strategies", author: "Will Larson", url: "https://learning.oreilly.com/library/view/an-elegant-puzzle/9781492077930/ch03.html#visions_and_strategies", format: "book", time: "~20 min", desc: "How to write and use strategy and vision documents. The structural companion to Larson\u2019s blog posts." },
+      { title: "Larson \u00a73.6: Migrations", author: "Will Larson", url: "https://learning.oreilly.com/library/view/an-elegant-puzzle/9781492077930/ch03.html#migrations_the_sole_scalable_fix_to_tech", format: "book", time: "~25 min", desc: "Migrations as the sole scalable fix to tech debt. Directly relevant to legacy\u2192new platform \u2014 how to run a migration that actually completes." },
+    ]
+  },
+  {
+    id: 7, cls: "c7",
+    title: "Scope the Problem",
+    situation: "There\u2019s a vague mandate: \u201cbuild the new platform.\u201d Or a specific one that\u2019s actually three problems wearing a trenchcoat. Everyone has opinions about what to build. Nobody has explicitly decided what\u2019s out of scope. You\u2019re six weeks into design before someone realizes half the team assumed offline sync was in scope and the other half assumed it wasn\u2019t.",
+    changes: "You learn to frame problems before solving them. What\u2019s the actual question? Who are we building for first? What would we <em>not</em> build even if we could? You develop the discipline of writing a scope statement that\u2019s specific enough to be wrong \u2014 \u201cMVP supports core services and product lines A, B, and C; remaining lines are post-launch\u201d \u2014 so it can be debated and refined rather than left ambiguous.",
+    ready: "Given a vague initiative, you can produce a one-page scope statement that names the problem, the audience, what\u2019s in, what\u2019s explicitly out, and what assumptions you\u2019re making. Your team can read it and disagree with specific points instead of talking past each other.",
+    practice: "Write a scope statement for the new platform MVP. Use the platform investment map: which service offerings are in the first launch? Which business capabilities are fully in scope, which are partial, which are deferred? What platform services does that imply? Make it specific enough that someone could disagree with a particular line.",
+    startResources: [
+      { title: "Solving the Engineering Strategy Crisis", author: "Will Larson", url: "https://lethain.com/solving-the-engineering-strategy-crisis-videos/", format: "video", time: "49 min", desc: "What engineering strategy is and how to make scope decisions visible, accountable, and improvable. Directly addresses \u201chow do you decide what to build.\u201d" },
+      { title: "Writing an Engineering Strategy", author: "Will Larson", url: "https://lethain.com/eng-strategies/", format: "article", time: "15 min", desc: "Practical framework for strategy documents that scope work. Real examples from Stripe, Uber, Calm." },
+    ],
+    deeperResources: [
+      { title: "Core Domain Patterns", author: "Nick Tune", url: "https://medium.com/nick-tune-tech-strategy-blog/core-domain-patterns-941f89446af5", format: "article", time: "10 min", desc: "Core Domain Charts: classify capabilities as core (build), supporting (buy/simplify), or generic (outsource). A structured way to decide what\u2019s in scope." },
+      { title: "FSA Ch 5: Identifying Architectural Characteristics", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch05.html", format: "book", time: "~30 min", desc: "How to extract architectural priorities from domain concerns and stakeholder input. The fewest characteristics necessary \u2014 scoping applied to architecture." },
+      { title: "FSA Ch 19: Architecture Decisions", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch19.html", format: "book", time: "~35 min", desc: "ADRs as scope artifacts: documenting what was decided, why, and what was explicitly rejected. Anti-patterns: Covering Your Assets, Groundhog Day." },
+    ]
+  },
+  {
+    id: 8, cls: "c8",
+    title: "Design from the Business Down",
+    situation: "You\u2019re in a room with a consultant, a whiteboard, and a mandate to build a platform. The consultant has a proposal with 30+ modules. You have domain expertise and a business capability map from a stakeholder workshop. But you don\u2019t have a method for going from \u201cwhat the business does\u201d to \u201cwhat the platform builds\u201d\u2009\u2014\u2009and neither does the consultant, because they don\u2019t know your business the way you do.",
+    changes: "You learn to work in three layers: what the business does (capabilities), what the platform builds (services), and what the company sells (offerings). Capabilities are stable\u2009\u2014\u2009they don\u2019t change when the technology changes. Platform services are what you design. The value chain is the organizing axis, not the module list. Where a capability produces data for others to consume, you apply data product thinking\u2009\u2014\u2009treating that output as something subscribable, versioned, and owned by a domain, not just a table in a shared database. Wardley mapping adds the build-vs-buy dimension: which capabilities are commodity, which are differentiating, which are novel.",
+    ready: "Given a business capability, you can identify the platform services it needs, explain why each service exists, and trace which service offerings depend on it. You can look at a consultant\u2019s module list and say \u201cthese three modules are actually one platform service under field data acquisition\u201d or \u201cthis module doesn\u2019t map to any business capability we confirmed\u2009\u2014\u2009what is it?\u201d",
+    practice: "Create a business capability map for your platform. Pick one business capability row. List the platform services in that row. For each: why does this service exist? Which service offerings need it? Now compare to your architecture proposal\u2019s module list\u2009\u2014\u2009which modules cover this same ground? Where do they split what should be together? Where do they combine what should be separate? Bring your mapping to a session.",
+    startResources: [
+      { title: "The Architect Elevator \u2014 Visiting the Upper Floors", author: "Gregor Hohpe", url: "https://martinfowler.com/articles/architect-elevator.html", format: "article", time: "15 min", desc: "Why developers need to understand business architecture. How architects translate between business strategy (capabilities, value chains) and technical execution (services, platforms). Sets the mental model." },
+      { title: "Identify Business Capabilities", author: "Cartwright, Horn & Lewis", url: "https://martinfowler.com/articles/patterns-legacy-displacement/identify-business-capabilities.html", format: "article", time: "15 min", desc: "Practical guide to identifying business capabilities as the first step in architecture. Shows how to decompose an organization into stable capability units." },
+    ],
+    deeperResources: [
+      { title: "Business Capability Centric", author: "Martin Fowler", url: "https://martinfowler.com/bliki/BusinessCapabilityCentric.html", format: "article", time: "5 min", desc: "What it means to organize teams and systems around capabilities rather than technical layers. Connects to Conway\u2019s Law." },
+      { title: "Platform Tech Strategy: The Three Layers", author: "ThoughtWorks", url: "https://www.thoughtworks.com/insights/blog/platform-tech-strategy-three-layers", format: "article", time: "12 min", desc: "The three-layer model (technology platform, service platform, experience platform) and how business capabilities map into platform services. Directly mirrors the the new platform investment map\u2019s structure." },
+      { title: "Introduction to Value Chain Mapping", author: "Simon Wardley", url: "https://www.youtube.com/watch?v=NnFeIt-uaEc", format: "video", time: "40 min", desc: "Wardley\u2019s foundational talk: why value chain position determines what to build, buy, or outsource. The evolution dimension the capability map doesn\u2019t give you.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/introduction-to-value-chain-mapping-simon-wardley.md" },
+      { title: "Wardley Maps (free book) \u2014 Ch 1\u20132", author: "Simon Wardley", url: "https://learnwardleymapping.com/book/", format: "guide", time: "~60 min", desc: "Chapters 1 (\u201cOn Being Lost\u201d) and 2 (\u201cFinding a Path\u201d). The complete on-ramp to Wardley mapping. Free, CC-licensed." },
+      { title: "Use Domain Analysis to Model Microservices", author: "Azure Architecture Center", url: "https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis", format: "article", time: "20 min", desc: "The full chain from capability identification \u2192 bounded context definition \u2192 service design. Uses a concrete example. This is the bridge between Capability 6 and Capability 2." },
+      { title: "Legacy Architecture Modernisation with Strategic DDD", author: "Nick Tune", url: "https://medium.com/nick-tune-tech-strategy-blog/legacy-architecture-modernisation-with-strategic-domain-driven-design-3e7c05bb383f", format: "article", time: "15 min", desc: "Business capability analysis as the starting point for bounded contexts. Bridges capability mapping, EventStorming, and the Bounded Context Canvas." },
+      { title: "Core Domain Patterns", author: "Nick Tune", url: "https://medium.com/nick-tune-tech-strategy-blog/core-domain-patterns-941f89446af5", format: "article", time: "10 min", desc: "Core Domain Charts: classify capabilities as core, supporting, or generic. Plot by complexity and differentiation. Directly informs build/buy/outsource decisions with the architecture team." },
+    ]
+  },
+  {
+    id: 9, cls: "c10",
+    title: "Lead the Conversation",
+    situation: "You have the analysis \u2014 boundaries, pressure tests, data product design, strategic context, a capability-to-platform mapping. Now you need to do something with it. the architecture team is proposing an architecture. Leadership wants to know if it\u2019s right. Your team needs to understand why decisions are being made.",
+    changes: "The vocabulary stops being foreign \u2014 not because you memorized definitions, but because you\u2019ve used the concepts to do real work. You can explain a trade-off to a consultant, justify a scope decision to a director, and walk a developer through why a boundary exists. You can sit in a co-design session with the architecture team and say \u201cour capability map shows X, your module list shows Y \u2014 let\u2019s reconcile\u201d rather than just reacting to their proposal.",
+    ready: "You can run a working session \u2014 not just attend one. You can present your domain map to the architecture team and defend your boundary choices. You can explain to leadership why \u201cdata mesh ready\u201d doesn\u2019t mean building a data mesh. You can teach a teammate what a bounded context is by pointing at a real one in your system.",
+    practice: "Pick one of these and do it for real: (1) Write a 5-minute presentation of the new platform\u2019s business capability map for a non-technical stakeholder. (2) Prepare a co-design agenda for a 90-minute session with the architecture team: what you\u2019ll present, what you\u2019ll ask, what you need to leave with. (3) Teach a teammate one concept from this map using an the new platform example, not a definition.",
+    startResources: [
+      { title: "Starbucks Does Not Use Two-Phase Commit", author: "Gregor Hohpe", url: "https://www.enterpriseintegrationpatterns.com/ramblings/18_starbucks.html", format: "article", time: "15 min", desc: "The best non-academic intro to async messaging and eventual consistency. Coffee shop ordering as a distributed system. A model for how to explain complex concepts simply." },
+      { title: "The Architect Elevator \u2014 Visiting the Upper Floors", author: "Gregor Hohpe", url: "https://martinfowler.com/articles/architect-elevator.html", format: "article", time: "15 min", desc: "How architects translate between business strategy and technical execution \u2014 the skill of communicating across organizational levels." },
+    ],
+    deeperResources: [
+      { title: "Data Consistency Using Sagas", author: "Chris Richardson", url: "https://www.infoq.com/presentations/saga-microservices/", format: "video", time: "50 min", desc: "Practical walkthrough of the saga pattern \u2014 orchestration vs choreography with real examples. After this, \u201csaga\u201d stops being a buzzword." },
+      { title: "When to Use Microservices (And When Not To)", author: "Sam Newman & Martin Fowler", url: "https://gotopia.tech/episodes/20/moving-to-microservices-with-sam-newman-and-martin-fowler", format: "video", time: "35 min", desc: "When microservices are overkill and why \u201cthe monolith is not the enemy.\u201d A position you can take into a room.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/when-to-use-microservices-newman-fowler.md" },
+      { title: "Consumer-Driven Contracts", author: "Ian Robinson", url: "https://martinfowler.com/articles/consumerDrivenContracts.html", format: "article", time: "25 min", desc: "How consumers express expectations that providers must satisfy. The theoretical basis for Pact and similar tools." },
+      { title: "Turning the Database Inside Out", author: "Martin Kleppmann", url: "https://www.youtube.com/watch?v=fU9hR3kiOK0", format: "video", time: "45 min", desc: "Reframes databases as streams of immutable facts. Changes how you think about event sourcing and data flow.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/turning-the-database-inside-out-martin-kleppmann.md" },
+      { title: "Hard Parts Ch 12: Transactional Sagas", author: "Ford, Richards et al.", url: "https://learning.oreilly.com/library/view/software-architecture-the/9781492086888/ch12.html", format: "book", time: "~50 min", desc: "Extends Richardson\u2019s saga talk with 8 named saga patterns. After this you can name the exact pattern a workflow needs." },
+      { title: "Hard Parts Ch 13: Contracts", author: "Ford, Richards et al.", url: "https://learning.oreilly.com/library/view/software-architecture-the/9781492086888/ch13.html", format: "book", time: "~35 min", desc: "Strict vs loose contracts, stamp coupling, the \u201cneed-to-know\u201d principle. Contract versioning strategies." },
+      { title: "DDIA 2e Ch 5: Encoding and Evolution", author: "Kleppmann & Riccomini", url: "https://learning.oreilly.com/library/view/designing-data-intensive-applications/9781098119058/ch05.html", format: "book", time: "~60 min", desc: "The comprehensive treatment of schema evolution: JSON, Thrift, Protobuf, Avro, and how data flows between systems." },
+      { title: "DDIA 2e Ch 8: Transactions", author: "Kleppmann & Riccomini", url: "https://learning.oreilly.com/library/view/designing-data-intensive-applications/9781098119058/ch08.html", format: "book", time: "~75 min", desc: "ACID, isolation levels, write conflicts, serializability. Essential when someone says \u201cwe need transactions across services.\u201d" },
+      { title: "Chris Richardson on Microservice Patterns", author: "SE Radio #370", url: "https://se-radio.net/2019/06/episode-370-chris-richardson-on-microservice-patterns/", format: "podcast", time: "55 min", desc: "Broad vocabulary survey: sagas, API gateways, event sourcing, CQRS." },
+      { title: "Schema Evolution in Avro, Protobuf and Thrift", author: "Martin Kleppmann", url: "https://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html", format: "article", time: "20 min", desc: "Concrete comparison of backward/forward compatibility. What \u201cschema evolution\u201d means in practice." },
+    ]
+  },
+  {
+    id: 10, cls: "c9",
+    title: "Write to Drive Decisions",
+    situation: "You had a great conversation in a meeting. Everyone agreed on the approach. Two weeks later, nobody can remember what was decided or why. Or: you have an important technical position, but you can\u2019t get 30 minutes with the right people. Or: a decision needs input from people in three time zones who will never be in the same room.",
+    changes: "You learn that writing is not documentation \u2014 it\u2019s a tool of influence. An RFC isn\u2019t a formality; it\u2019s how you get a decision made without needing everyone in a room. An ADR isn\u2019t a record; it\u2019s how you prevent the same argument from happening every quarter. You develop the habit of writing the decision down <em>before</em> the meeting, so the meeting is about refinement, not discovery.",
+    ready: "You\u2019ve written an RFC or design doc that drove a real decision \u2014 not just described one after the fact. Someone disagreed with a specific section, you revised it, and the result was better than either of your original positions.",
+    practice: "Pick one architectural decision facing the new platform (e.g., offline-first vs cloud-first for field data, build vs buy for report generation). Write a one-page decision document: context, options considered, recommendation, trade-offs, what you\u2019re giving up. Share it with a colleague and ask them to disagree with one specific point.",
+    startResources: [
+      { title: "Scaling the Practice of Architecture, Conversationally", author: "Andrew Harmel-Law", url: "https://martinfowler.com/articles/scaling-architecture-conversationally.html", format: "article", time: "30 min", desc: "How to decentralize architectural decisions using ADRs and conversational practices. Writing as the mechanism that makes architecture collaborative, not top-down." },
+      { title: "FSA Ch 19: Architecture Decisions", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch19.html", format: "book", time: "~35 min", desc: "ADR structure (context, decision, consequences), anti-patterns (Covering Your Assets, Groundhog Day, Email-Driven Architecture). The reference chapter for writing decisions that stick." },
+    ],
+    deeperResources: [
+      { title: "Writing an Engineering Strategy", author: "Will Larson", url: "https://lethain.com/eng-strategies/", format: "article", time: "15 min", desc: "Strategy docs as the upstream artifact that frames all downstream decisions. Overlaps with Cap 7 (Scope) but here the focus is on the writing craft." },
+      { title: "The Architect Elevator \u2014 Visiting the Upper Floors", author: "Gregor Hohpe", url: "https://martinfowler.com/articles/architect-elevator.html", format: "article", time: "15 min", desc: "How architects communicate across organizational levels. Writing for executives vs writing for engineers \u2014 same decision, different framing." },
+      { title: "FSA Ch 20: Analyzing Architecture Risk", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch20.html", format: "book", time: "~30 min", desc: "Risk storming as a collaborative written exercise. How to surface and document architectural risks systematically rather than through ad-hoc conversation." },
+    ]
+  },
+  {
+    id: 11, cls: "c0",
+    title: "Use AI as a Thinking Partner",
+    situation: "You have GitHub Copilot. Maybe you\u2019ve tried Claude or ChatGPT. You use them for autocomplete or quick answers. But when you try something harder (analyze this design, find gaps), the results are too generic or confidently wrong, and you can\u2019t tell which.",
+    changes: "You stop treating AI like a search engine and start treating it like a junior colleague who\u2019s read everything but built nothing. That means you lead the conversation\u2009\u2014\u2009you provide the context, you set the constraints, you decide what\u2019s useful in the response. The AI gets better because <em>you</em> get better at asking. And you develop a healthy skepticism: AI output sounds authoritative whether it\u2019s right or wrong, so you learn to check its reasoning against your own domain knowledge.",
+    ready: "You can take a document and run a structured AI-assisted analysis that produces findings you\u2019d trust enough to bring into a review\u2009\u2014\u2009with your own judgment applied on top.",
+    practice: "Feed a section of the architecture proposal to Claude with specific context about the domain. Ask: \u201cWhat assumptions is this making? Where are the gaps?\u201d Compare the AI\u2019s findings to your own reading. Where did it add value? Where did it miss something? Where was it confidently wrong?",
+    startResources: [
+      { title: "Agentic Coding", author: "Armin Ronacher", url: "https://www.youtube.com/watch?v=bpWPEhO7RqE", format: "video", time: "71 min", desc: "The creator of Flask sharing his real production workflow with Claude Code\u2009\u2014\u2009when agents excel, where they fail.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/agentic-coding-armin-ronacher.md" },
+      { title: "AI Coding Degrades: Silent Failures", author: "IEEE Spectrum", url: "https://spectrum.ieee.org/ai-coding-degrades", format: "article", time: "10 min", desc: "How LLMs silently remove safety checks and fake output formatting. The failure modes to recognize." },
+    ],
+    deeperResources: [
+      { title: "AI Impact on Experienced Developer Productivity", author: "METR", url: "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/", format: "research", time: "20 min", desc: "AI tools made experienced devs 19% slower on familiar codebases\u2009\u2014\u2009despite believing they were 20% faster." },
+      { title: "A Year of Vibes", author: "Armin Ronacher", url: "https://lucumr.pocoo.org/2025/12/22/a-year-of-vibes/", format: "article", time: "15 min", desc: "Full-year retrospective on agentic coding in production\u2009\u2014\u2009what worked, what didn\u2019t." },
+      { title: "Agentic Engineering Patterns", author: "Simon Willison", url: "https://simonwillison.net/guides/agentic-engineering-patterns/", format: "guide", time: "30 min", desc: "Curated practices for AI coding agents. Living document\u2009\u2014\u2009check back." },
+      { title: "AI Tooling for Software Engineers in 2026", author: "Gergely Orosz", url: "https://newsletter.pragmaticengineer.com/p/ai-tooling-2026", format: "article", time: "25 min", desc: "Survey of ~1000 engineers on actual AI usage. Data, not vendor claims." },
+    ]
+  }
+];
+
+const CHEVRON_SVG = '<svg class="subsection-chevron" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"/></svg>';
+
+let progress = JSON.parse(localStorage.getItem('tl-cap-progress') || '{}');
+let formatFilter = 'all';
+
+function saveProgress() { localStorage.setItem('tl-cap-progress', JSON.stringify(progress)); }
+
+function resetProgress() {
+  if (confirm('Reset all progress?')) {
+    progress = {};
+    saveProgress();
+    render();
+  }
+}
+
+function resourceHTML(r) {
+  const hidden = formatFilter !== 'all' && r.format !== formatFilter;
+  return `<div class="resource${hidden ? ' hidden' : ''}" data-format="${r.format}">
+    <span class="format-badge ${r.format}">${r.format}</span>
+    <div class="resource-info">
+      <div class="resource-title"><a href="${r.url}" target="_blank" rel="noopener">${r.title}</a>${r.summaryUrl ? ` (<a href="${r.summaryUrl}" target="_blank" rel="noopener">summary</a>)` : ''}</div>
+      <div class="resource-author">${r.author}</div>
+      <div class="resource-desc">${r.desc}</div>
+    </div>
+    <span class="resource-time">${r.time}</span>
+  </div>`;
+}
+
+function subsection(id, label, count, content) {
+  return `<div class="subsection" aria-expanded="false" id="${id}">
+    <button class="subsection-toggle" aria-controls="${id}-body" aria-expanded="false" onclick="toggleSub('${id}')">
+      ${CHEVRON_SVG}
+      ${label}
+      <span class="subsection-count">${count}</span>
+    </button>
+    <div class="subsection-body" id="${id}-body" role="region" aria-labelledby="${id}">
+      ${content}
+    </div>
+  </div>`;
+}
+
+function render() {
+  const container = document.getElementById('capabilities');
+  container.innerHTML = DATA.map(cap => {
+    const isDone = progress[cap.id];
+    const startCount = cap.startResources.filter(r => formatFilter === 'all' || r.format === formatFilter).length;
+    const deeperCount = cap.deeperResources.filter(r => formatFilter === 'all' || r.format === formatFilter).length;
+
+    const startHTML = `<div class="resources">${cap.startResources.map(resourceHTML).join('')}</div>`;
+    const deeperHTML = `<div class="resources">${cap.deeperResources.map(resourceHTML).join('')}</div>`;
+    const practiceHTML = `<div class="practice-box">${cap.practice}</div>`;
+
+    const capLabel = `Capability ${cap.id}`;
+    const capNum = cap.id;
+
+    return `<article class="capability${isDone ? ' completed' : ''}" role="listitem" aria-label="${capLabel}: ${cap.title}">
+      <div class="cap-header">
+        <div class="cap-number ${cap.cls}" aria-hidden="true">${capNum}</div>
+        <div class="cap-header-content">
+          <div class="cap-title-row">
+            <h3 class="cap-title">${cap.title}</h3>
+            <input type="checkbox" class="cap-check" aria-label="Mark ${capLabel} as complete" ${isDone ? 'checked' : ''} onchange="toggleCheck(${cap.id}, this.checked)">
+          </div>
+        </div>
+      </div>
+      <div class="cap-body">
+        <div class="section-label">The situation</div>
+        <p class="prose">${cap.situation}</p>
+        <div class="section-label">What changes</div>
+        <p class="prose">${cap.changes}</p>
+        <div class="section-label">You're ready when</div>
+        <div class="ready-box">${cap.ready}</div>
+      </div>
+      ${subsection(`cap${cap.id}-start`, 'Start here', startCount + ' resource' + (startCount !== 1 ? 's' : ''), startHTML)}
+      ${subsection(`cap${cap.id}-deeper`, 'Go deeper', deeperCount + ' resource' + (deeperCount !== 1 ? 's' : ''), deeperHTML)}
+      ${subsection(`cap${cap.id}-practice`, 'Practice This', '', practiceHTML)}
+    </article>`;
+  }).join('');
+}
+
+function toggleSub(id) {
+  const el = document.getElementById(id);
+  const expanded = el.getAttribute('aria-expanded') === 'true';
+  el.setAttribute('aria-expanded', !expanded);
+  el.querySelector('.subsection-toggle').setAttribute('aria-expanded', !expanded);
+}
+
+function toggleCheck(id, checked) {
+  progress[id] = checked;
+  saveProgress();
+  // Update border without full re-render
+  const capLabel = `Capability ${id}`;
+  const card = document.querySelector(`[aria-label="${capLabel}: ${DATA.find(c=>c.id===id).title}"]`);
+  if (card) card.classList.toggle('completed', checked);
+}
+
+// --- Filters ---
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    formatFilter = btn.dataset.filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.setAttribute('aria-pressed', 'false'));
+    btn.setAttribute('aria-pressed', 'true');
+    render();
+  });
+});
+
+render();
+
+// --- Theme toggle ---
+(function() {
+  var pref = localStorage.getItem('theme-preference') || 'auto';
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function applyTheme(p) {
+    pref = p;
+    var theme = p === 'night' ? 'dark' : p === 'day' ? 'light' : mq.matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-theme-preference', p);
+    localStorage.setItem('theme-preference', p);
+    document.querySelectorAll('[data-theme-btn]').forEach(function(b) {
+      var val = b.getAttribute('data-theme-btn');
+      b.setAttribute('aria-pressed', val === (p === 'day' ? 'day' : p === 'night' ? 'night' : 'auto') ? 'true' : 'false');
+    });
+  }
+
+  applyTheme(pref);
+
+  document.querySelectorAll('[data-theme-btn]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      applyTheme(btn.getAttribute('data-theme-btn'));
+    });
+  });
+
+  mq.addEventListener('change', function() {
+    if (pref === 'auto') applyTheme('auto');
+  });
+
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      document.documentElement.classList.add('transitions-enabled');
+    });
+  });
+})();
+</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({
+  startOnLoad: true,
+  securityLevel: 'loose',
+  flowchart: {
+    curve: 'basis',
+    padding: 18,
+    htmlLabels: false,
+    nodeSpacing: 24,
+    rankSpacing: 36,
+    useMaxWidth: true
+  }
+});
+</script>
+</body>
+</html>
