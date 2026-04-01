@@ -1,12 +1,12 @@
-# 10. Lead the Conversation
+# 9. Lead the Conversation
 
 [Back to Capability Map](concept-map)
 
 **The situation:** You have the analysis — boundaries, pressure tests, data product design, strategic context, a capability-to-platform mapping. Now you need to do something with it. Someone is proposing an architecture. Leadership wants to know if it's right. Your team needs to understand why decisions are being made.
 
-**What changes:** The vocabulary stops being foreign — not because you memorized definitions, but because you've used the concepts to do real work. You can explain a trade-off to an architect, justify a scope decision to a director, and walk a developer through why a boundary exists. You can sit in a co-design session and say "our capability map shows X, the proposal's module list shows Y — let's reconcile" rather than just reacting to a proposal.
+**What changes:** The vocabulary stops being foreign — not because you memorized definitions, but because you've used the concepts to do real work. You can explain a trade-off to a design partner, justify a scope decision to a director, and walk a developer through why a boundary exists. You can sit in a co-design session and say "our capability map shows X, the proposal's module list shows Y — let's reconcile them together" rather than just reacting to a proposal.
 
-**You're ready when:** You can run a working session — not just attend one. You can present your domain map and defend your boundary choices. You can explain to leadership why "data mesh ready" doesn't mean building a data mesh. You can teach a teammate what a bounded context is by pointing at a real one in your system.
+**You're ready when:** You can run a working session — not just attend one. You can present your domain map in a cross-functional session and defend your boundary choices. You can explain to leadership why "data mesh ready" doesn't mean building a data mesh. You can teach a teammate what a bounded context is by pointing at a real one in your system.
 
 ### Start here
 
@@ -19,8 +19,8 @@
 
 | Resource | Format | Time | What it adds |
 |----------|--------|------|-------------|
-| [Data Consistency Using Sagas](https://www.infoq.com/presentations/saga-microservices/) — Chris Richardson ([summary](https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/data-consistency-using-sagas-chris-richardson.md)) | Video | 50 min | Practical walkthrough of the saga pattern — orchestration vs choreography. After this, "saga" stops being a buzzword. |
-| [When to Use Microservices (And When Not To)](https://gotopia.tech/episodes/20/moving-to-microservices-with-sam-newman-and-martin-fowler) — Sam Newman & Martin Fowler ([summary](https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/when-to-use-microservices-newman-fowler.md)) | Video | 35 min | When microservices are overkill. A position you can take into a room. |
+| [Data Consistency Using Sagas](https://www.infoq.com/presentations/saga-microservices/) — Chris Richardson ([summary](https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/data-consistency-using-sagas-chris-richardson.md)) | Video | 50 min | Practical walkthrough of the saga pattern — orchestration vs choreography. After this, "saga" becomes a concrete design tool rather than a vague term. |
+| [When to Use Microservices (And When Not To)](https://gotopia.tech/episodes/20/moving-to-microservices-with-sam-newman-and-martin-fowler) — Sam Newman & Martin Fowler ([summary](https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/when-to-use-microservices-newman-fowler.md)) | Video | 35 min | When microservices are and aren't the best fit. A balanced position you can take into a room. |
 | [Consumer-Driven Contracts](https://martinfowler.com/articles/consumerDrivenContracts.html) — Ian Robinson | Article | 25 min | How consumers express expectations that providers must satisfy. |
 | [Turning the Database Inside Out](https://www.youtube.com/watch?v=fU9hR3kiOK0) — Martin Kleppmann ([summary](https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/turning-the-database-inside-out-martin-kleppmann.md)) | Video | 45 min | Reframes databases as streams of immutable facts. Changes how you think about event sourcing. |
 | [Hard Parts Ch 12: Transactional Sagas](https://learning.oreilly.com/library/view/software-architecture-the/9781492086888/ch12.html) — Ford, Richards et al. | Book | ~50 min | 8 named saga patterns across three dimensions. After this you can name the exact pattern a workflow needs. |

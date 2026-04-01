@@ -1,4 +1,4 @@
-# 7. Scope the Problem
+# 2. Scope the Problem
 
 [Back to Capability Map](concept-map)
 

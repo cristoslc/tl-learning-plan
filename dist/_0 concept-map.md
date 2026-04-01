@@ -26,7 +26,7 @@ The capabilities aren't independent — they reinforce each other. But **Capabil
 
 ![Capability connection diagram](capability-graph.png)
 
-1 is the gateway. 2 and 3 are the core analysis pair; 4 extends 3 into operational thinking. 5 builds on 2 — once you have boundaries, design what crosses them. 6 and 7 are peers that feed 8: strategic context and problem scoping flowing into applied platform design. 9 and 10 are the influence layer — writing drives decisions, leading drives outcomes. AI accelerates everything.
+1 is the gateway. 1 and 2 both feed 3: clarifying the claim and scoping the problem set up boundary finding. 4 and 5 are the design-stress pair. 6 builds on 3 — once you have boundaries, design what crosses them. 2 and 7 feed 8, with 7 also feeding 9: problem framing and strategic context flowing into applied platform design and leadership conversations. 10 and AI are force multipliers you use alongside everything.
 
 ---
 
@@ -35,15 +35,15 @@ The capabilities aren't independent — they reinforce each other. But **Capabil
 | # | Capability | Link |
 |---|-----------|------|
 | 1 | Smell-Test an Architectural Claim | [Smell-Test Claims](capability-01-smell-test-claims) |
-| 2 | Find the Real Boundaries | [Find Boundaries](capability-02-find-boundaries) |
-| 3 | Pressure-Test a Design | [Pressure-Test](capability-03-pressure-test) |
-| 4 | Think in Production | [Think in Production](capability-04-think-in-production) |
-| 5 | Data Product Thinking | [Data Product Thinking](capability-05-data-product-thinking) |
-| 6 | Read the Strategic Map | [Strategic Map](capability-06-strategic-map) |
-| 7 | Scope the Problem | [Scope the Problem](capability-07-scope-the-problem) |
+| 2 | Scope the Problem | [Scope the Problem](capability-02-scope-the-problem) |
+| 3 | Find the Real Boundaries | [Find Boundaries](capability-03-find-boundaries) |
+| 4 | Pressure-Test a Design | [Pressure-Test](capability-04-pressure-test) |
+| 5 | Think in Production | [Think in Production](capability-05-think-in-production) |
+| 6 | Data Product Thinking | [Data Product Thinking](capability-06-data-product-thinking) |
+| 7 | Read the Strategic Map | [Strategic Map](capability-07-strategic-map) |
 | 8 | Design from the Business Down | [Design from the Business](capability-08-design-from-the-business) |
-| 9 | Write to Drive Decisions | [Write to Drive Decisions](capability-10-write-to-drive-decisions) |
-| 10 | Lead the Conversation | [Lead the Conversation](capability-09-lead-the-conversation) |
+| 9 | Lead the Conversation | [Lead the Conversation](capability-09-lead-the-conversation) |
+| 10 | Write to Drive Decisions | [Write to Drive Decisions](capability-10-write-to-drive-decisions) |
 | — | Use AI as a Thinking Partner | [AI Partner](capability-11-ai-partner) |
 
 ---
@@ -69,12 +69,12 @@ Track by capability, not by resource consumed. Mark a capability when you can do
 | # | Capability | Status | Notes |
 |---|-----------|--------|-------|
 | 1 | Smell-Test an Architectural Claim | | |
-| 2 | Find the Real Boundaries | | |
-| 3 | Pressure-Test a Design | | |
-| 4 | Think in Production | | |
-| 5 | Data Product Thinking | | |
-| 6 | Read the Strategic Map | | |
-| 7 | Scope the Problem | | |
+| 2 | Scope the Problem | | |
+| 3 | Find the Real Boundaries | | |
+| 4 | Pressure-Test a Design | | |
+| 5 | Think in Production | | |
+| 6 | Data Product Thinking | | |
+| 7 | Read the Strategic Map | | |
 | 8 | Design from the Business Down | | |
-| 9 | Write to Drive Decisions | | |
-| 10 | Lead the Conversation | | |
+| 9 | Lead the Conversation | | |
+| 10 | Write to Drive Decisions | | |

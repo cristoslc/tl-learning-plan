@@ -1,4 +1,4 @@
-# 9. Write to Drive Decisions
+# 10. Write to Drive Decisions
 
 [Back to Capability Map](concept-map)
 
@@ -19,7 +19,7 @@
 
 | Resource | Format | Time | What it adds |
 |----------|--------|------|-------------|
-| [Writing an Engineering Strategy](https://lethain.com/eng-strategies/) — Will Larson | Article | 15 min | Strategy docs as the upstream artifact framing all downstream decisions. Overlaps with Cap 7 but here the focus is on writing craft. |
+| [Writing an Engineering Strategy](https://lethain.com/eng-strategies/) — Will Larson | Article | 15 min | Strategy docs as the upstream artifact framing all downstream decisions. Overlaps with Cap 2 but here the focus is on writing craft. |
 | [The Architect Elevator — Visiting the Upper Floors](https://martinfowler.com/articles/architect-elevator.html) — Gregor Hohpe | Article | 15 min | Writing for executives vs writing for engineers — same decision, different framing. |
 | [FSA Ch 20: Analyzing Architecture Risk](https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch20.html) — Richards & Ford | Book | ~30 min | Risk storming as a collaborative written exercise. Surfacing and documenting architectural risks systematically. |
 

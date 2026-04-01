@@ -1,4 +1,4 @@
-# 5. Data Product Thinking
+# 6. Data Product Thinking
 
 [Back to Capability Map](concept-map)
 

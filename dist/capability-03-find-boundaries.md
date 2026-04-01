@@ -1,19 +1,19 @@
-# 2. Find the Real Boundaries
+# 3. Find the Real Boundaries
 
 [Back to Capability Map](concept-map)
 
-**The situation:** You're looking at a system design — maybe an architecture proposal, maybe a whiteboard sketch — and it has boxes with names. Modules, services, components. The question you can't answer: are these *real* boundaries (different domains with different rules and different data) or just feature groupings someone drew because they needed to organize a slide deck?
+**The situation:** You're looking at a system design — maybe an architecture proposal, maybe a whiteboard sketch — and it has boxes with names. Modules, services, components. The question you can't answer: are these *real* boundaries (different domains with different rules and different data) or just a first-pass grouping to help the conversation move forward?
 
-**What changes:** You learn to test boundaries with three questions: Does it own its data? Would a different team draw the same line? How much does it need to talk across the boundary to do its job? Fake boundaries fail at least one of these. You also learn that the number of boxes is not a quality signal — 30 modules isn't better or worse than 7 until you know why each boundary exists.
+**What changes:** You learn to test boundaries with three questions: Does it own its data? Would a different team draw the same line? How much does it need to talk across the boundary to do its job? Boundaries that are still provisional usually raise questions on at least one of these. You also learn that the number of boxes is not a quality signal — 30 modules isn't better or worse than 7 until you know why each boundary exists.
 
-**You're ready when:** You can look at a system diagram and point to a specific boundary and say "this one is real because [data ownership / independent change / minimal cross-talk]" or "this one is suspicious because [shared database / high coupling / org-chart-driven]."
+**You're ready when:** You can look at a system diagram and point to a specific boundary and say "this one is real because [data ownership / independent change / minimal cross-talk]" or "this one is worth probing further because [shared database / high coupling / org-chart-driven]."
 
 ### Start here
 
 | Resource | Format | Time | Why this one |
 |----------|--------|------|-------------|
 | [Bounded Context](https://martinfowler.com/bliki/BoundedContext.html) — Martin Fowler | Article | 10 min | Concise definition with examples of how the same concept ("product," "customer") means different things in different contexts. Read this first. |
-| [DDD & Microservices: At Last, Some Boundaries!](https://www.youtube.com/watch?v=yPvef9R3k-M) — Eric Evans ([summary](https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/ddd-microservices-at-last-some-boundaries-eric-evans.md)) | Video | 50 min | The person who invented bounded contexts explains how they give services real isolation — and how without them, a monolith's tangle just becomes a tangle of service interactions. |
+| [DDD & Microservices: At Last, Some Boundaries!](https://www.youtube.com/watch?v=yPvef9R3k-M) — Eric Evans ([summary](https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/ddd-microservices-at-last-some-boundaries-eric-evans.md)) | Video | 50 min | The person who invented bounded contexts explains how they give services real isolation — and how, without them, complexity tends to move from the codebase into service interactions. |
 
 ### Go deeper
 
@@ -30,4 +30,4 @@
 
 ### Practice This
 
-Take 3 modules from a recent architecture proposal at your company. For each: does it own its data? Would a team that didn't know about the proposal's slide deck still draw this boundary? What cross-boundary communication does it need? Write up your assessment — agreement, suspicion, or "I'd need to know more about X."
+Take 3 modules from a recent architecture proposal at your company. For each: does it own its data? Would a team coming fresh to the problem still draw this boundary? What cross-boundary communication does it need? Write up your assessment — agreement, uncertainty, or "I'd need to know more about X."

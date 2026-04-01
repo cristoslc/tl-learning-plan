@@ -1,4 +1,4 @@
-# 3. Pressure-Test a Design
+# 4. Pressure-Test a Design
 
 [Back to Capability Map](concept-map)
 

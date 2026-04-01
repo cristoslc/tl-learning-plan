@@ -703,39 +703,40 @@
   }
 }}%%
 graph TD
-    C1["1. Smell-Test Claims"]
-    C2["2. Find Boundaries"]
-    C3["3. Pressure-Test"]
-    C6["6. Strategic Map"]
-    C4["4. Think in Production"]
-    C5["5. Data Product Thinking"]
-    C7["7. Scope the Problem"]
-    C8["8. Design from the Business"]
-    C9["9. Lead the Conversation"]
     C10["10. Write to Drive Decisions"]:::alongside
     C11["11. AI Partner"]:::alongside
+    C1["1. Smell-Test Claims"]
+    C2["2. Scope the Problem"]
+    C3["3. Find Boundaries"]
+    C4["4. Pressure-Test"]
+    C5["5. Think in Production"]
+    C6["6. Data Product Thinking"]
+    C7["7. Strategic Map"]
+    C8["8. Design from the Business"]
+    C9["9. Lead the Conversation"]
 
     C1 --> C3
-    C1 --> C2
-    C2 <-.-> C3
-    C3 <-.-> C4
-    C2 --> C5
-    C5 --> C8
-    C4 -.-> C8
+    C2 --> C3
+    C3 --> C4
+    C4 <-.-> C5
+    C3 --> C6
     C6 --> C8
-    C7 --> C8
-    C6 --> C9
+    C5 -.-> C8
+    C2 -----> C8
+    C7 ----> C8
     C8 --> C9
+    C7 --> C9
+    C10 ~~~ C11
 
     classDef default fill:#eef0fa,stroke:#00049E,stroke-width:2px,color:#00049E,font-weight:700,rx:20,ry:20
     classDef alongside fill:#f8f8f8,stroke:#706F6F,stroke-width:1.5px,stroke-dasharray:5 4,color:#4a4a49,font-weight:600,rx:20,ry:20
 
-    style C2 fill:#e6f7f7,stroke:#006b6b,color:#005555
-    style C3 fill:#ededfc,stroke:#1a1f99,color:#1a1f99
-    style C4 fill:#f2e6e9,stroke:#8a1538,color:#6b0f2a
-    style C5 fill:#f2f0f8,stroke:#5a4a8a,color:#4a3d75
-    style C6 fill:#e6f4fa,stroke:#00698f,color:#005a7a
-    style C7 fill:#fef3e6,stroke:#8a4500,color:#6b3600
+    style C2 fill:#fef3e6,stroke:#8a4500,color:#6b3600
+    style C3 fill:#e6f7f7,stroke:#006b6b,color:#005555
+    style C4 fill:#ededfc,stroke:#1a1f99,color:#1a1f99
+    style C5 fill:#f2e6e9,stroke:#8a1538,color:#6b0f2a
+    style C6 fill:#f2f0f8,stroke:#5a4a8a,color:#4a3d75
+    style C7 fill:#e6f4fa,stroke:#00698f,color:#005a7a
     style C8 fill:#edf7f1,stroke:#2d7a4a,color:#1f6338
     style C9 fill:#fef3e6,stroke:#8a4500,color:#6b3600
     style C10 fill:#f8edf4,stroke:#7a2d5a,color:#5e1d45
@@ -745,7 +746,7 @@ graph TD
     </div>
 
     <div class="map-legend">
-<strong>1. Smell-Test Claims</strong> is the gateway. <strong>2. Find Boundaries</strong> and <strong>3. Pressure-Test</strong> are the core analysis pair; <strong>4. Think in Production</strong> extends 3 into operational thinking. <strong>5. Data Product Thinking</strong> builds on 2 &mdash; once you have boundaries, design what crosses them. <strong>6. Strategic Map</strong> and <strong>7. Scope the Problem</strong> feed <strong>8. Design from the Business</strong>: strategic context and problem scoping flowing into applied platform design. <strong>9. Lead the Conversation</strong> is the capstone &mdash; leading conversations, co-designing, educating. <strong>10. Write to Drive Decisions</strong> and <strong>11. AI Partner</strong> are force multipliers you use alongside everything.
+<strong>1. Smell-Test Claims</strong> is the gateway, and together with <strong>2. Scope the Problem</strong> it feeds <strong>3. Find Boundaries</strong>: clarifying the claim and scoping the problem set up boundary finding. <strong>4. Pressure-Test</strong> and <strong>5. Think in Production</strong> are the design-stress pair. <strong>6. Data Product Thinking</strong> builds on 3 &mdash; once you have boundaries, design what crosses them. <strong>2. Scope the Problem</strong> and <strong>7. Strategic Map</strong> feed <strong>8. Design from the Business</strong>, with <strong>7. Strategic Map</strong> also feeding <strong>9. Lead the Conversation</strong>. <strong>10. Write to Drive Decisions</strong> and <strong>11. AI Partner</strong> are force multipliers you use alongside everything.
     </div>
 
     <div class="books-section">
@@ -769,13 +770,13 @@ const DATA = [
   {
     id: 1, cls: "c1",
     title: "Smell-Test an Architectural Claim",
-    situation: "Someone in a design review says \u201cwe need microservices for scalability\u201d or \u201cevent sourcing is the right pattern here.\u201d It sounds reasonable. You\u2019re not sure if it actually is, but you don\u2019t have a way to push on it without sounding like you\u2019re just being difficult.",
-    changes: "You develop a reflex: <em>what kind of claim is this?</em> Some claims are backed by decades of evidence (tight coupling increases change cost). Some are patterns that work in specific contexts (event sourcing\u2009\u2014\u2009when you need audit trails and temporal queries). Some are rules of thumb being stated as laws. Some are conference hype. The response is different for each. You stop asking \u201cis this right?\u201d and start asking \u201cwhat would have to be true for this to be right?\u201d",
-    ready: "You hear an architectural assertion in a meeting and your first instinct is to classify it, not accept or reject it. You can say \u201cthat\u2019s a reasonable pattern\u2009\u2014\u2009what\u2019s the context that makes it fit here?\u201d without preparation.",
-    practice: "Pick any claim from the architecture proposal (or from a recent design conversation). Write down: what kind of claim is this? What evidence would support it? What context would it need to be true? Bring your analysis to a session.",
+    situation: "Someone in a design review says \u201cwe need microservices for scalability\u201d or \u201cevent sourcing is the right pattern here.\u201d It sounds reasonable. But it\u2019s often a proposed solution standing in for an unstated problem. You need a way to slow the conversation down, surface what they\u2019re actually trying to solve, and do it without sounding combative.",
+    changes: "You develop a reflex: first clarify the problem, then evaluate the claim. \u201cWhat are we seeing that makes this feel necessary?\u201d \u201cCan you tell me more about the scaling issue?\u201d \u201cWho is affected?\u201d Once the problem is explicit, you can ask <em>what kind of claim is this?</em> Some claims are backed by decades of evidence. Some are patterns that work in specific contexts. Some are rules of thumb being stated as laws. Some are emerging ideas being applied more broadly than their evidence supports. You stop reacting to the proposed solution in the abstract and start asking what would have to be true for it to fit this situation.",
+    ready: "You hear an architectural assertion in a meeting and your first instinct is to ask a clarifying question, not accept or reject it. You can say \u201ccan you tell me more about the problem we\u2019re trying to solve?\u201d or \u201cwhat\u2019s the context that makes that pattern fit here?\u201d without preparation.",
+    practice: "Pick any claim from the architecture proposal (or from a recent design conversation). Write down: what clarifying questions would you ask first? What problem do you think the speaker is actually trying to solve? Then write: what kind of claim is this? What evidence would support it? What context would it need to be true? Bring your analysis to a session.",
     startResources: [
       { title: "How to Think Like an Architect", author: "Mark Richards", url: "https://www.youtube.com/watch?v=W7Krz__jJUg", format: "video", time: "45 min", desc: "The \u201ctriangle of knowledge\u201d\u2009\u2014\u2009knowing what you don\u2019t know\u2009\u2014\u2009and how to translate business needs into architectural characteristics.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/how-to-think-like-an-architect-mark-richards.md" },
-      { title: "\u201cGood Enough\u201d Architecture", author: "Stefan Tilkov", url: "https://www.youtube.com/watch?v=PzEox3szeRc", format: "video", time: "42 min", desc: "Six real architectures that went wrong. Calibrates your instincts for too much vs too little architectural ambition.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/good-enough-architecture-stefan-tilkov.md" },
+      { title: "\u201cGood Enough\u201d Architecture", author: "Stefan Tilkov", url: "https://www.youtube.com/watch?v=PzEox3szeRc", format: "video", time: "42 min", desc: "Six real architectures with useful lessons. Calibrates your instincts for too much vs too little architectural ambition.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/good-enough-architecture-stefan-tilkov.md" },
     ],
     deeperResources: [
       { title: "Thinking Like an Architect", author: "Gregor Hohpe", url: "https://www.infoq.com/presentations/architect-lessons/", format: "video", time: "50 min", desc: "Two decades of practice distilled: decision models, blind spots, bridging organizational layers.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/thinking-like-an-architect-gregor-hohpe.md" },
@@ -785,19 +786,19 @@ const DATA = [
       { title: "Developer to Architect \u2014 Lesson Series", author: "Mark Richards", url: "https://developertoarchitect.com/lessons/", format: "video", time: "10 min each", desc: "200+ bite-sized architecture lessons. Browse and pick what\u2019s relevant." },
       { title: "FSA Ch 2: Architectural Thinking", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch02.html", format: "book", time: "~45 min", desc: "Goes deeper than the Richards talk: how architects and developers should collaborate, technical breadth vs depth, analyzing trade-offs, and understanding business drivers." },
       { title: "FSA Ch 4: Architecture Characteristics Defined", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch04.html", format: "book", time: "~30 min", desc: "Systematic framework for the \u201c-ilities\u201d \u2014 operational, structural, and cross-cutting. New material: how to select the fewest characteristics necessary to avoid over-engineering." },
-      { title: "BEA Ch 8: Pitfalls and Antipatterns", author: "Ford, Parsons et al.", url: "https://learning.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/ch08.html", format: "book", time: "~40 min", desc: "Pattern recognition for bad claims: Vendor King, Last 10% Trap, resume-driven development, inappropriate governance. Once you\u2019ve read this, you\u2019ll spot these in the wild." },
+      { title: "BEA Ch 8: Pitfalls and Antipatterns", author: "Ford, Parsons et al.", url: "https://learning.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/ch08.html", format: "book", time: "~40 min", desc: "Pattern recognition for claims that need closer scrutiny: Vendor King, Last 10% Trap, resume-driven development, inappropriate governance. Once you\u2019ve read this, you\u2019ll notice these patterns more readily." },
     ]
   },
   {
-    id: 2, cls: "c2",
+    id: 3, cls: "c2",
     title: "Find the Real Boundaries",
-    situation: "You\u2019re looking at a system design and it has boxes with names. Modules, services, components. Are these <em>real</em> boundaries (different domains with different rules and different data) or just feature groupings someone drew to organize a slide deck?",
-    changes: "You learn to test boundaries with three questions: Does it own its data? Would a different team draw the same line? How much does it need to talk across the boundary to do its job? Fake boundaries fail at least one. You also learn that the number of boxes is not a quality signal\u2009\u2014\u200930 modules isn\u2019t better or worse than 7 until you know why each boundary exists.",
-    ready: "You can point to a specific boundary and say \u201cthis one is real because [data ownership / independent change / minimal cross-talk]\u201d or \u201cthis one is suspicious because [shared database / high coupling / org-chart-driven].\u201d",
-    practice: "Take 3 of the architecture proposal\u2019s 30+ modules. For each: does it own its data? Would a team that didn\u2019t know about the architecture team's slide deck still draw this boundary? What cross-boundary communication does it need? Write up your assessment.",
+    situation: "You\u2019re looking at a system design and it has boxes with names. Modules, services, components. Are these <em>real</em> boundaries (different domains with different rules and different data) or just a first-pass grouping to help the conversation move forward?",
+    changes: "You learn to test boundaries with three questions: Does it own its data? Would a different team draw the same line? How much does it need to talk across the boundary to do its job? Boundaries that are still provisional usually raise questions on at least one of these. You also learn that the number of boxes is not a quality signal\u2009\u2014\u200930 modules isn\u2019t better or worse than 7 until you know why each boundary exists.",
+    ready: "You can point to a specific boundary and say \u201cthis one is real because [data ownership / independent change / minimal cross-talk]\u201d or \u201cthis one is worth probing further because [shared database / high coupling / org-chart-driven].\u201d",
+    practice: "Take 3 of the architecture proposal\u2019s 30+ modules. For each: does it own its data? Would a team coming fresh to the problem still draw this boundary? What cross-boundary communication does it need? Write up your assessment.",
     startResources: [
       { title: "Bounded Context", author: "Martin Fowler", url: "https://martinfowler.com/bliki/BoundedContext.html", format: "article", time: "10 min", desc: "Concise definition with examples of how \u201cproduct\u201d and \u201ccustomer\u201d mean different things in different contexts." },
-      { title: "DDD & Microservices: At Last, Some Boundaries!", author: "Eric Evans", url: "https://www.youtube.com/watch?v=yPvef9R3k-M", format: "video", time: "50 min", desc: "The inventor of bounded contexts on how they give services real isolation.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/ddd-microservices-at-last-some-boundaries-eric-evans.md" },
+      { title: "DDD & Microservices: At Last, Some Boundaries!", author: "Eric Evans", url: "https://www.youtube.com/watch?v=yPvef9R3k-M", format: "video", time: "50 min", desc: "The inventor of bounded contexts on how they give services real isolation \u2014 and how, without them, complexity tends to move into service interactions.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/ddd-microservices-at-last-some-boundaries-eric-evans.md" },
     ],
     deeperResources: [
       { title: "50,000 Orange Stickies Later", author: "Alberto Brandolini", url: "https://youtu.be/1i6QYvYhlYQ", format: "video", time: "50 min", desc: "EventStorming\u2009\u2014\u2009a workshop technique where boundaries emerge from mapping business events.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/50000-orange-stickies-later-alberto-brandolini.md" },
@@ -806,12 +807,12 @@ const DATA = [
       { title: "Identify Microservice Boundaries", author: "Azure Architecture Center", url: "https://learn.microsoft.com/en-us/azure/architecture/microservices/model/microservice-boundaries", format: "article", time: "20 min", desc: "Step-by-step guidance using domain analysis. Prescriptive and concrete." },
       { title: "Vaughn Vernon on Strategic Monoliths", author: "SE Radio #495", url: "https://se-radio.net/2022/01/episode-495-vaughn-vernon-on-strategic-monoliths-and-microservices/", format: "podcast", time: "60 min", desc: "How bounded contexts inform whether you need microservices at all." },
       { title: "Hard Parts Ch 5: Component-Based Decomposition Patterns", author: "Ford, Richards et al.", url: "https://learning.oreilly.com/library/view/software-architecture-the/9781492086888/ch05.html", format: "book", time: "~90 min", desc: "Six-step process for extracting services from a monolith: identify components, gather common domains, flatten, map dependencies, create domains, extract services. The most detailed decomposition guide available." },
-      { title: "Hard Parts Ch 7: Service Granularity", author: "Ford, Richards et al.", url: "https://learning.oreilly.com/library/view/software-architecture-the/9781492086888/ch07.html", format: "book", time: "~45 min", desc: "The disintegrators/integrators framework \u2014 structured reasons to split (volatility, scalability, fault tolerance) vs keep together (transactions, shared data, workflows). Directly applicable to evaluating the architecture team's 30+ modules." },
+      { title: "Hard Parts Ch 7: Service Granularity", author: "Ford, Richards et al.", url: "https://learning.oreilly.com/library/view/software-architecture-the/9781492086888/ch07.html", format: "book", time: "~45 min", desc: "The disintegrators/integrators framework \u2014 structured reasons to split (volatility, scalability, fault tolerance) vs keep together (transactions, shared data, workflows). Directly applicable to evaluating a large module decomposition." },
       { title: "FSA Ch 7: Scope of Architecture Characteristics", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch07.html", format: "book", time: "~30 min", desc: "Introduces the \u201carchitecture quantum\u201d \u2014 the independently deployable unit with high functional cohesion. Changes how you think about where characteristics apply: not system-wide, but per quantum." },
     ]
   },
   {
-    id: 3, cls: "c3",
+    id: 4, cls: "c3",
     title: "Pressure-Test a Design",
     situation: "A proposed architecture looks clean on paper. Nobody\u2019s asking hard questions because it\u2019s early and everyone wants to move forward. But you\u2019ve seen \u201cclean on paper\u201d before\u2009\u2014\u2009the last system looked clean once too.",
     changes: "You learn that non-functional requirements are the pressure. Not vague ones (\u201cit should be fast\u201d) but specific ones (\u201cfield inspectors need to sync over 3G with P95 under 200ms\u201d). Each real NFR rules out options and constrains others. You stop evaluating designs by how they look and start evaluating them by what would break them. You also learn fitness functions\u2009\u2014\u2009automated tests for architectural properties, so drift is caught by CI, not by a crisis.",
@@ -833,7 +834,7 @@ const DATA = [
     ]
   },
   {
-    id: 4, cls: "c4",
+    id: 5, cls: "c4",
     title: "Think in Production",
     situation: "The architecture looks good on the whiteboard. The design review passed. Then it ships, and you discover there\u2019s no way to tell if offline sync is silently dropping records, no runbook for when the data pipeline stalls, and the only person who knows how the reconciliation service works is on vacation.",
     changes: "You learn to design for day 2, not just day 1. Every service needs answers to: how do I know it\u2019s healthy? How do I know it\u2019s broken? What does the operator do when it breaks? How do I deploy a fix without downtime? You stop treating observability and operability as things you add after launch and start treating them as constraints that shape the design.",
@@ -851,7 +852,7 @@ const DATA = [
     ]
   },
   {
-    id: 5, cls: "c5",
+    id: 6, cls: "c5",
     title: "Data Product Thinking",
     situation: "A domain in your system produces data that other domains, other teams, or external consumers need. Right now it\u2019s a database table someone queries directly, or a CSV export, or an API that returns whatever the producer decided to expose. When the schema changes, consumers break. When the data is wrong, nobody knows until a report looks funny.",
     changes: "You learn to treat data that crosses a boundary as a product \u2014 something with an owner, a contract, a quality guarantee, and a versioning strategy. Not every output needs this treatment, but when a capability produces data for others to consume, you apply a specific design discipline: who owns it, who can discover it, what freshness and accuracy guarantees does it carry, and how does it evolve without breaking consumers.",
@@ -862,7 +863,7 @@ const DATA = [
       { title: "Data Mesh Paradigm Shift", author: "Zhamak Dehghani", url: "https://www.infoq.com/presentations/data-mesh-paradigm/", format: "video", time: "50 min", desc: "Dehghani\u2019s foundational talk. Same principles as the article but with visuals showing how domain-oriented data ownership works in practice." },
     ],
     deeperResources: [
-      { title: "Dehghani Ch 3: Principle of Data as a Product", author: "Zhamak Dehghani", url: "https://learning.oreilly.com/library/view/data-mesh/9781492092384/ch03.html", format: "book", time: "~45 min", desc: "The full DAUTNIVS treatment: what each attribute means, how to assess it, and what \u201cownership\u201d looks like for a data product. When the architecture team says \u201cdata product,\u201d this is how you test whether they mean what Dehghani means." },
+      { title: "Dehghani Ch 3: Principle of Data as a Product", author: "Zhamak Dehghani", url: "https://learning.oreilly.com/library/view/data-mesh/9781492092384/ch03.html", format: "book", time: "~45 min", desc: "The full DAUTNIVS treatment: what each attribute means, how to assess it, and what \u201cownership\u201d looks like for a data product. When a design discussion uses the term \u201cdata product,\u201d this is how you test whether it matches Dehghani\u2019s definition." },
       { title: "Dehghani Ch 11: Design a Data Product by Affordances", author: "Zhamak Dehghani", url: "https://learning.oreilly.com/library/view/data-mesh/9781492092384/ch11.html", format: "book", time: "~45 min", desc: "The data product as architectural quantum \u2014 the smallest independently deployable unit. Covers ownership, interfaces, contracts, and quality guarantees." },
       { title: "Dehghani Ch 9: The Logical Architecture", author: "Zhamak Dehghani", url: "https://learning.oreilly.com/library/view/data-mesh/9781492092384/ch09.html", format: "book", time: "~40 min", desc: "How domains, data products, and platform planes interact as a system. Maps directly onto the three-layer model: business capabilities own domains, platform services support the planes, data products are the outputs." },
       { title: "Data Mesh Revisited", author: "Dehghani, Parsons et al.", url: "https://www.thoughtworks.com/insights/podcasts/technology-podcasts/data-mesh-revisited", format: "podcast", time: "50 min", desc: "Honest assessment three years later \u2014 what worked, what was hard, where data product thinking has matured." },
@@ -870,7 +871,7 @@ const DATA = [
     ]
   },
   {
-    id: 6, cls: "c6",
+    id: 7, cls: "c6",
     title: "Read the Strategic Map",
     situation: "Leadership standardizes on C#, pursues MDM, invests in data products. You can repeat the decision but you can\u2019t explain <em>why</em> it was made, which means you can\u2019t use it to inform your own technical choices.",
     changes: "You build a mental model of the company\u2019s strategic bets: why the new platform exists (not a rewrite\u2009\u2014\u2009a different architectural bet), why data products matter (domain outputs are feedstock, not finished goods), why language standardization has a business rationale beyond preference.",
@@ -890,7 +891,7 @@ const DATA = [
       { title: "The Platform and Program Split at Uber", author: "Gergely Orosz", url: "https://newsletter.pragmaticengineer.com/p/program-platform-split-uber", format: "article", time: "30 min", desc: "How Uber structured platform teams vs program teams. Case study of standardization through platform ownership." },
       { title: "Agile Master Data Management", author: "Scott Ambler", url: "https://agiledata.org/essays/masterdatamanagement.html", format: "article", time: "20 min", desc: "What MDM is, why enterprises pursue it. Practical, vendor-neutral \u2014 explains why the company cares about shared definitions of \u201casset\u201d and \u201cbuilding.\u201d" },
       { title: "Bottleneck #01: Tech Debt", author: "Martin Fowler et al.", url: "https://martinfowler.com/articles/bottlenecks-of-scaleups/01-tech-debt.html", format: "article", time: "25 min", desc: "Organizational patterns for managing tech debt as a strategic concern: auditing, ownership, tiger teams." },
-      { title: "Data Monolith to Mesh", author: "Zhamak Dehghani", url: "https://martinfowler.com/articles/data-monolith-to-mesh.html", format: "article", time: "30 min", desc: "The strategic \u201cwhy\u201d of domain-oriented data ownership. Included for context, not the technical \u201chow\u201d (which is in Cap 5)." },
+      { title: "Data Monolith to Mesh", author: "Zhamak Dehghani", url: "https://martinfowler.com/articles/data-monolith-to-mesh.html", format: "article", time: "30 min", desc: "The strategic \u201cwhy\u201d of domain-oriented data ownership. Included for context, not the technical \u201chow\u201d (which is in Cap 6)." },
       { title: "Hohpe Ch 9: Architecture Is Selling Options", author: "Gregor Hohpe", url: "https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch09.html", format: "book", time: "~20 min", desc: "Every technology decision is buying an option. Not \u201cis C# good?\u201d but \u201cwhat does C# preserve and what does it foreclose?\u201d The framework for evaluating any strategic technology commitment." },
       { title: "Hohpe Ch 6: Making Decisions", author: "Gregor Hohpe", url: "https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch06.html", format: "book", time: "~20 min", desc: "How architects frame decisions in complex environments. Pairs with Ch 9 \u2014 one is the framing, the other is the evaluation method." },
       { title: "Hohpe Ch 15: A4 Paper Doesn\u2019t Stifle Creativity", author: "Gregor Hohpe", url: "https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch15.html", format: "book", time: "~15 min", desc: "Standards enable rather than restrict. The constructive framing for explaining why organizations standardize on a language or platform." },
@@ -900,7 +901,7 @@ const DATA = [
     ]
   },
   {
-    id: 7, cls: "c7",
+    id: 2, cls: "c7",
     title: "Scope the Problem",
     situation: "There\u2019s a vague mandate: \u201cbuild the new platform.\u201d Or a specific one that\u2019s actually three problems wearing a trenchcoat. Everyone has opinions about what to build. Nobody has explicitly decided what\u2019s out of scope. You\u2019re six weeks into design before someone realizes half the team assumed offline sync was in scope and the other half assumed it wasn\u2019t.",
     changes: "You learn to frame problems before solving them. What\u2019s the actual question? Who are we building for first? What would we <em>not</em> build even if we could? You develop the discipline of writing a scope statement that\u2019s specific enough to be wrong \u2014 \u201cMVP supports core services and product lines A, B, and C; remaining lines are post-launch\u201d \u2014 so it can be debated and refined rather than left ambiguous.",
@@ -919,9 +920,9 @@ const DATA = [
   {
     id: 8, cls: "c8",
     title: "Design from the Business Down",
-    situation: "You\u2019re in a room with a consultant, a whiteboard, and a mandate to build a platform. The consultant has a proposal with 30+ modules. You have domain expertise and a business capability map from a stakeholder workshop. But you don\u2019t have a method for going from \u201cwhat the business does\u201d to \u201cwhat the platform builds\u201d\u2009\u2014\u2009and neither does the consultant, because they don\u2019t know your business the way you do.",
+    situation: "You\u2019re in a room with an architect, a whiteboard, and a mandate to build a platform. There\u2019s a proposal with 30+ modules on the table. You have domain expertise and a business capability map from a stakeholder workshop. What you\u2019re missing is a shared method for going from \u201cwhat the business does\u201d to \u201cwhat the platform builds\u201d\u2009\u2014\u2009a way to connect domain understanding, stakeholder input, and design choices.",
     changes: "You learn to work in three layers: what the business does (capabilities), what the platform builds (services), and what the company sells (offerings). Capabilities are stable\u2009\u2014\u2009they don\u2019t change when the technology changes. Platform services are what you design. The value chain is the organizing axis, not the module list. Where a capability produces data for others to consume, you apply data product thinking\u2009\u2014\u2009treating that output as something subscribable, versioned, and owned by a domain, not just a table in a shared database. Wardley mapping adds the build-vs-buy dimension: which capabilities are commodity, which are differentiating, which are novel.",
-    ready: "Given a business capability, you can identify the platform services it needs, explain why each service exists, and trace which service offerings depend on it. You can look at a consultant\u2019s module list and say \u201cthese three modules are actually one platform service under field data acquisition\u201d or \u201cthis module doesn\u2019t map to any business capability we confirmed\u2009\u2014\u2009what is it?\u201d",
+    ready: "Given a business capability, you can identify the platform services it needs, explain why each service exists, and trace which service offerings depend on it. You can look at a proposal\u2019s module list and say \u201cthese three modules may actually belong together as one platform service under field data acquisition\u201d or \u201cI don\u2019t yet see how this module maps to the business capabilities we confirmed\u2009\u2014\u2009can we walk through it?\u201d",
     practice: "Create a business capability map for your platform. Pick one business capability row. List the platform services in that row. For each: why does this service exist? Which service offerings need it? Now compare to your architecture proposal\u2019s module list\u2009\u2014\u2009which modules cover this same ground? Where do they split what should be together? Where do they combine what should be separate? Bring your mapping to a session.",
     startResources: [
       { title: "The Architect Elevator \u2014 Visiting the Upper Floors", author: "Gregor Hohpe", url: "https://martinfowler.com/articles/architect-elevator.html", format: "article", time: "15 min", desc: "Why developers need to understand business architecture. How architects translate between business strategy (capabilities, value chains) and technical execution (services, platforms). Sets the mental model." },
@@ -932,25 +933,25 @@ const DATA = [
       { title: "Platform Tech Strategy: The Three Layers", author: "ThoughtWorks", url: "https://www.thoughtworks.com/insights/blog/platform-tech-strategy-three-layers", format: "article", time: "12 min", desc: "The three-layer model (technology platform, service platform, experience platform) and how business capabilities map into platform services. Directly mirrors the the new platform investment map\u2019s structure." },
       { title: "Introduction to Value Chain Mapping", author: "Simon Wardley", url: "https://www.youtube.com/watch?v=NnFeIt-uaEc", format: "video", time: "40 min", desc: "Wardley\u2019s foundational talk: why value chain position determines what to build, buy, or outsource. The evolution dimension the capability map doesn\u2019t give you.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/introduction-to-value-chain-mapping-simon-wardley.md" },
       { title: "Wardley Maps (free book) \u2014 Ch 1\u20132", author: "Simon Wardley", url: "https://learnwardleymapping.com/book/", format: "guide", time: "~60 min", desc: "Chapters 1 (\u201cOn Being Lost\u201d) and 2 (\u201cFinding a Path\u201d). The complete on-ramp to Wardley mapping. Free, CC-licensed." },
-      { title: "Use Domain Analysis to Model Microservices", author: "Azure Architecture Center", url: "https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis", format: "article", time: "20 min", desc: "The full chain from capability identification \u2192 bounded context definition \u2192 service design. Uses a concrete example. This is the bridge between Capability 6 and Capability 2." },
+      { title: "Use Domain Analysis to Model Microservices", author: "Azure Architecture Center", url: "https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis", format: "article", time: "20 min", desc: "The full chain from capability identification \u2192 bounded context definition \u2192 service design. Uses a concrete example. This is the bridge between Capability 7 and Capability 3." },
       { title: "Legacy Architecture Modernisation with Strategic DDD", author: "Nick Tune", url: "https://medium.com/nick-tune-tech-strategy-blog/legacy-architecture-modernisation-with-strategic-domain-driven-design-3e7c05bb383f", format: "article", time: "15 min", desc: "Business capability analysis as the starting point for bounded contexts. Bridges capability mapping, EventStorming, and the Bounded Context Canvas." },
-      { title: "Core Domain Patterns", author: "Nick Tune", url: "https://medium.com/nick-tune-tech-strategy-blog/core-domain-patterns-941f89446af5", format: "article", time: "10 min", desc: "Core Domain Charts: classify capabilities as core, supporting, or generic. Plot by complexity and differentiation. Directly informs build/buy/outsource decisions with the architecture team." },
+      { title: "Core Domain Patterns", author: "Nick Tune", url: "https://medium.com/nick-tune-tech-strategy-blog/core-domain-patterns-941f89446af5", format: "article", time: "10 min", desc: "Core Domain Charts: classify capabilities as core, supporting, or generic. Plot by complexity and differentiation. Directly informs collaborative build/buy/outsource decisions." },
     ]
   },
   {
     id: 9, cls: "c10",
     title: "Lead the Conversation",
-    situation: "You have the analysis \u2014 boundaries, pressure tests, data product design, strategic context, a capability-to-platform mapping. Now you need to do something with it. the architecture team is proposing an architecture. Leadership wants to know if it\u2019s right. Your team needs to understand why decisions are being made.",
-    changes: "The vocabulary stops being foreign \u2014 not because you memorized definitions, but because you\u2019ve used the concepts to do real work. You can explain a trade-off to a consultant, justify a scope decision to a director, and walk a developer through why a boundary exists. You can sit in a co-design session with the architecture team and say \u201cour capability map shows X, your module list shows Y \u2014 let\u2019s reconcile\u201d rather than just reacting to their proposal.",
-    ready: "You can run a working session \u2014 not just attend one. You can present your domain map to the architecture team and defend your boundary choices. You can explain to leadership why \u201cdata mesh ready\u201d doesn\u2019t mean building a data mesh. You can teach a teammate what a bounded context is by pointing at a real one in your system.",
-    practice: "Pick one of these and do it for real: (1) Write a 5-minute presentation of the new platform\u2019s business capability map for a non-technical stakeholder. (2) Prepare a co-design agenda for a 90-minute session with the architecture team: what you\u2019ll present, what you\u2019ll ask, what you need to leave with. (3) Teach a teammate one concept from this map using an the new platform example, not a definition.",
+    situation: "You have the analysis \u2014 boundaries, pressure tests, data product design, strategic context, a capability-to-platform mapping. Now you need to do something with it. A design direction is taking shape. Leadership wants to know if it\u2019s right. Your team needs to understand why decisions are being made.",
+    changes: "The vocabulary stops being foreign \u2014 not because you memorized definitions, but because you\u2019ve used the concepts to do real work. You can explain a trade-off to a design partner, justify a scope decision to a director, and walk a developer through why a boundary exists. You can sit in a co-design session and say \u201cour capability map shows X, the proposal\u2019s module list shows Y \u2014 let\u2019s reconcile them together\u201d rather than just reacting to a proposal.",
+    ready: "You can run a working session \u2014 not just attend one. You can present your domain map in a cross-functional session and defend your boundary choices. You can explain to leadership why \u201cdata mesh ready\u201d doesn\u2019t mean building a data mesh. You can teach a teammate what a bounded context is by pointing at a real one in your system.",
+    practice: "Pick one of these and do it for real: (1) Write a 5-minute presentation of the new platform\u2019s business capability map for a non-technical stakeholder. (2) Prepare a co-design agenda for a 90-minute architecture session: what you\u2019ll present, what you\u2019ll ask, what you need to leave with. (3) Teach a teammate one concept from this map using a real example from the new platform, not a definition.",
     startResources: [
       { title: "Starbucks Does Not Use Two-Phase Commit", author: "Gregor Hohpe", url: "https://www.enterpriseintegrationpatterns.com/ramblings/18_starbucks.html", format: "article", time: "15 min", desc: "The best non-academic intro to async messaging and eventual consistency. Coffee shop ordering as a distributed system. A model for how to explain complex concepts simply." },
       { title: "The Architect Elevator \u2014 Visiting the Upper Floors", author: "Gregor Hohpe", url: "https://martinfowler.com/articles/architect-elevator.html", format: "article", time: "15 min", desc: "How architects translate between business strategy and technical execution \u2014 the skill of communicating across organizational levels." },
     ],
     deeperResources: [
-      { title: "Data Consistency Using Sagas", author: "Chris Richardson", url: "https://www.infoq.com/presentations/saga-microservices/", format: "video", time: "50 min", desc: "Practical walkthrough of the saga pattern \u2014 orchestration vs choreography with real examples. After this, \u201csaga\u201d stops being a buzzword." },
-      { title: "When to Use Microservices (And When Not To)", author: "Sam Newman & Martin Fowler", url: "https://gotopia.tech/episodes/20/moving-to-microservices-with-sam-newman-and-martin-fowler", format: "video", time: "35 min", desc: "When microservices are overkill and why \u201cthe monolith is not the enemy.\u201d A position you can take into a room.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/when-to-use-microservices-newman-fowler.md" },
+      { title: "Data Consistency Using Sagas", author: "Chris Richardson", url: "https://www.infoq.com/presentations/saga-microservices/", format: "video", time: "50 min", desc: "Practical walkthrough of the saga pattern \u2014 orchestration vs choreography with real examples. After this, \u201csaga\u201d becomes a concrete design tool rather than a vague term." },
+      { title: "When to Use Microservices (And When Not To)", author: "Sam Newman & Martin Fowler", url: "https://gotopia.tech/episodes/20/moving-to-microservices-with-sam-newman-and-martin-fowler", format: "video", time: "35 min", desc: "When microservices are and aren\u2019t the best fit. A balanced position you can take into a room.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/when-to-use-microservices-newman-fowler.md" },
       { title: "Consumer-Driven Contracts", author: "Ian Robinson", url: "https://martinfowler.com/articles/consumerDrivenContracts.html", format: "article", time: "25 min", desc: "How consumers express expectations that providers must satisfy. The theoretical basis for Pact and similar tools." },
       { title: "Turning the Database Inside Out", author: "Martin Kleppmann", url: "https://www.youtube.com/watch?v=fU9hR3kiOK0", format: "video", time: "45 min", desc: "Reframes databases as streams of immutable facts. Changes how you think about event sourcing and data flow.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/turning-the-database-inside-out-martin-kleppmann.md" },
       { title: "Hard Parts Ch 12: Transactional Sagas", author: "Ford, Richards et al.", url: "https://learning.oreilly.com/library/view/software-architecture-the/9781492086888/ch12.html", format: "book", time: "~50 min", desc: "Extends Richardson\u2019s saga talk with 8 named saga patterns. After this you can name the exact pattern a workflow needs." },
@@ -973,7 +974,7 @@ const DATA = [
       { title: "FSA Ch 19: Architecture Decisions", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch19.html", format: "book", time: "~35 min", desc: "ADR structure (context, decision, consequences), anti-patterns (Covering Your Assets, Groundhog Day, Email-Driven Architecture). The reference chapter for writing decisions that stick." },
     ],
     deeperResources: [
-      { title: "Writing an Engineering Strategy", author: "Will Larson", url: "https://lethain.com/eng-strategies/", format: "article", time: "15 min", desc: "Strategy docs as the upstream artifact that frames all downstream decisions. Overlaps with Cap 7 (Scope) but here the focus is on the writing craft." },
+      { title: "Writing an Engineering Strategy", author: "Will Larson", url: "https://lethain.com/eng-strategies/", format: "article", time: "15 min", desc: "Strategy docs as the upstream artifact that frames all downstream decisions. Overlaps with Cap 2 (Scope) but here the focus is on the writing craft." },
       { title: "The Architect Elevator \u2014 Visiting the Upper Floors", author: "Gregor Hohpe", url: "https://martinfowler.com/articles/architect-elevator.html", format: "article", time: "15 min", desc: "How architects communicate across organizational levels. Writing for executives vs writing for engineers \u2014 same decision, different framing." },
       { title: "FSA Ch 20: Analyzing Architecture Risk", author: "Richards & Ford", url: "https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch20.html", format: "book", time: "~30 min", desc: "Risk storming as a collaborative written exercise. How to surface and document architectural risks systematically rather than through ad-hoc conversation." },
     ]
@@ -981,12 +982,12 @@ const DATA = [
   {
     id: 11, cls: "c0",
     title: "Use AI as a Thinking Partner",
-    situation: "You have GitHub Copilot. Maybe you\u2019ve tried Claude or ChatGPT. You use them for autocomplete or quick answers. But when you try something harder (analyze this design, find gaps), the results are too generic or confidently wrong, and you can\u2019t tell which.",
-    changes: "You stop treating AI like a search engine and start treating it like a junior colleague who\u2019s read everything but built nothing. That means you lead the conversation\u2009\u2014\u2009you provide the context, you set the constraints, you decide what\u2019s useful in the response. The AI gets better because <em>you</em> get better at asking. And you develop a healthy skepticism: AI output sounds authoritative whether it\u2019s right or wrong, so you learn to check its reasoning against your own domain knowledge.",
+    situation: "You have GitHub Copilot. Maybe you\u2019ve tried Claude or ChatGPT. You use them for autocomplete or quick answers. But when you try something harder (analyze this design, find gaps), the results are either too generic or hard to trust, and you can\u2019t always tell why.",
+    changes: "You stop treating AI like a search engine and start treating it like a fast but uneven thinking partner. That means you lead the conversation\u2009\u2014\u2009you provide the context, you set the constraints, you decide what\u2019s useful in the response. The AI gets better because <em>you</em> get better at asking. And you develop a healthy skepticism: AI output can sound authoritative whether it\u2019s right or wrong, so you learn to check its reasoning against your own domain knowledge.",
     ready: "You can take a document and run a structured AI-assisted analysis that produces findings you\u2019d trust enough to bring into a review\u2009\u2014\u2009with your own judgment applied on top.",
-    practice: "Feed a section of the architecture proposal to Claude with specific context about the domain. Ask: \u201cWhat assumptions is this making? Where are the gaps?\u201d Compare the AI\u2019s findings to your own reading. Where did it add value? Where did it miss something? Where was it confidently wrong?",
+    practice: "Feed a section of the architecture proposal to Claude with specific context about the domain. Ask: \u201cWhat assumptions is this making? Where are the gaps?\u201d Compare the AI\u2019s findings to your own reading. Where did it add value? Where did it miss something? Where did its confidence outrun its reasoning?",
     startResources: [
-      { title: "Agentic Coding", author: "Armin Ronacher", url: "https://www.youtube.com/watch?v=bpWPEhO7RqE", format: "video", time: "71 min", desc: "The creator of Flask sharing his real production workflow with Claude Code\u2009\u2014\u2009when agents excel, where they fail.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/agentic-coding-armin-ronacher.md" },
+      { title: "Agentic Coding", author: "Armin Ronacher", url: "https://www.youtube.com/watch?v=bpWPEhO7RqE", format: "video", time: "71 min", desc: "The creator of Flask sharing his real production workflow with Claude Code\u2009\u2014\u2009when agents excel, where they fail. Grounded, hands-on perspective from someone shipping with these tools daily.", summaryUrl: "https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/agentic-coding-armin-ronacher.md" },
       { title: "AI Coding Degrades: Silent Failures", author: "IEEE Spectrum", url: "https://spectrum.ieee.org/ai-coding-degrades", format: "article", time: "10 min", desc: "How LLMs silently remove safety checks and fake output formatting. The failure modes to recognize." },
     ],
     deeperResources: [
@@ -1041,7 +1042,7 @@ function subsection(id, label, count, content) {
 
 function render() {
   const container = document.getElementById('capabilities');
-  container.innerHTML = DATA.map(cap => {
+  container.innerHTML = DATA.slice().sort((a, b) => a.id - b.id).map(cap => {
     const isDone = progress[cap.id];
     const startCount = cap.startResources.filter(r => formatFilter === 'all' || r.format === formatFilter).length;
     const deeperCount = cap.deeperResources.filter(r => formatFilter === 'all' || r.format === formatFilter).length;

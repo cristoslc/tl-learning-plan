@@ -1,4 +1,4 @@
-# 6. Read the Strategic Map
+# 7. Read the Strategic Map
 
 [Back to Capability Map](concept-map)
 
@@ -28,7 +28,7 @@
 | [The Platform and Program Split at Uber](https://newsletter.pragmaticengineer.com/p/program-platform-split-uber) — Gergely Orosz | Article | 30 min | How Uber structured platform teams (building blocks) vs program teams (business outcomes). A case study of standardization through platform ownership. |
 | [Agile Master Data Management](https://agiledata.org/essays/masterdatamanagement.html) — Scott Ambler | Article | 20 min | What MDM is, why enterprises pursue it, and why traditional approaches fail. Practical and vendor-neutral — explains why organizations care about shared definitions of core entities. |
 | [Bottleneck #01: Tech Debt](https://martinfowler.com/articles/bottlenecks-of-scaleups/01-tech-debt.html) — Martin Fowler et al. | Article | 25 min | Organizational patterns for managing tech debt as a strategic concern: auditing, ownership, tiger teams. Not just code cleanup — the business of debt management. |
-| [Data Monolith to Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html) — Zhamak Dehghani | Article | 30 min | The original data mesh article — included here for the strategic "why" of domain-oriented data ownership, not the technical "how" (which is in Cap 5). |
+| [Data Monolith to Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html) — Zhamak Dehghani | Article | 30 min | The original data mesh article — included here for the strategic "why" of domain-oriented data ownership, not the technical "how" (which is in Cap 6). |
 | [Hohpe Ch 9: Architecture Is Selling Options](https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch09.html) — Gregor Hohpe | Book | ~20 min | Every technology decision is buying an option. The question isn't "is C# good?" but "what options does C# preserve and what does it foreclose?" The framework for evaluating any strategic technology commitment — language, platform, vendor, stack. |
 | [Hohpe Ch 6: Making Decisions](https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch06.html) — Gregor Hohpe | Book | ~20 min | How architects frame decisions in complex environments. Pairs with Ch 9 — one is the framing, the other is the evaluation method. |
 | [Hohpe Ch 15: A4 Paper Doesn't Stifle Creativity](https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch15.html) — Gregor Hohpe | Book | ~15 min | Standards (like language standardization) enable rather than restrict. The constructive framing for explaining why organizations standardize on specific languages. |
