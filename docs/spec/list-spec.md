@@ -12,5 +12,5 @@
 
 | Artifact | Title | Last Updated | Commit |
 |----------|-------|-------------|--------|
-| SPEC-004 | Mermaid Node Jump to Capability | 2026-04-01 | -- |
+| SPEC-004 | Mermaid Node Jump to Capability | 2026-04-01 | 4d41a30 |
 
