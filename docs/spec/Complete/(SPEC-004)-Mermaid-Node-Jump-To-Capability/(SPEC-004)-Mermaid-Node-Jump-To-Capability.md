@@ -72,4 +72,4 @@ Add a stable anchor or `id` per rendered capability card so the list has determi
 | Phase | Date | Commit | Notes |
 |-------|------|--------|-------|
 | Ready | 2026-04-01 | 773bcc9 | Initial creation |
-| Complete | 2026-04-01 | -- | Acceptance criteria verified and implementation finished |
+| Complete | 2026-04-01 | 4d41a30 | Acceptance criteria verified and implementation finished |
