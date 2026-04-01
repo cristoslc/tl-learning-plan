@@ -1026,6 +1026,76 @@ function subsection(id, label, count, content) {
   </div>`;
 }
 
+function getCapabilityCard(id) {
+  return document.getElementById(`capability-${id}`);
+}
+
+function jumpToCapability(id) {
+  const card = getCapabilityCard(id);
+  if (!card) return false;
+
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  card.setAttribute('tabindex', '-1');
+  card.focus({ preventScroll: true });
+
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState(null, '', `#capability-${id}`);
+  }
+
+  return true;
+}
+
+function bindMermaidNodeJumps() {
+  const nodes = document.querySelectorAll('#capability-graph svg g.node[id*="flowchart-C"]');
+  if (!nodes.length) return false;
+
+  nodes.forEach(node => {
+    if (node.dataset.jumpBound === 'true') return;
+
+    const match = node.id.match(/flowchart-C(\d+)-/);
+    if (!match) return;
+
+    const capabilityId = Number(match[1]);
+    if (!getCapabilityCard(capabilityId)) return;
+
+    node.dataset.jumpBound = 'true';
+    node.classList.add('clickable');
+    node.setAttribute('role', 'link');
+    node.setAttribute('tabindex', '0');
+    node.setAttribute('aria-label', `Jump to Capability ${capabilityId}`);
+
+    node.addEventListener('click', function() {
+      jumpToCapability(capabilityId);
+    });
+
+    node.addEventListener('keydown', function(event) {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      jumpToCapability(capabilityId);
+    });
+  });
+
+  return true;
+}
+
+function watchMermaidNodeJumps() {
+  const graph = document.getElementById('capability-graph');
+  if (!graph) return;
+
+  const tryBind = function() {
+    return bindMermaidNodeJumps();
+  };
+
+  if (tryBind()) return;
+
+  const observer = new MutationObserver(function() {
+    if (!tryBind()) return;
+    observer.disconnect();
+  });
+
+  observer.observe(graph, { childList: true, subtree: true });
+}
+
 function render() {
   const container = document.getElementById('capabilities');
   container.innerHTML = DATA.slice().sort((a, b) => a.id - b.id).map(cap => {
@@ -1040,7 +1110,7 @@ function render() {
     const capLabel = `Capability ${cap.id}`;
     const capNum = cap.id;
 
-    return `<article class="capability${isDone ? ' completed' : ''}" role="listitem" aria-label="${capLabel}: ${cap.title}">
+    return `<article id="capability-${cap.id}" class="capability${isDone ? ' completed' : ''}" role="listitem" aria-label="${capLabel}: ${cap.title}" data-capability-id="${cap.id}">
       <div class="cap-header">
         <div class="cap-number ${cap.cls}" aria-hidden="true">${capNum}</div>
         <div class="cap-header-content">
@@ -1132,7 +1202,7 @@ render();
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
 mermaid.initialize({
-  startOnLoad: true,
+  startOnLoad: false,
   securityLevel: 'loose',
   flowchart: {
     curve: 'basis',
@@ -1143,6 +1213,12 @@ mermaid.initialize({
     useMaxWidth: true
   }
 });
+
+await mermaid.run({
+  querySelector: '#capability-graph .mermaid'
+});
+
+watchMermaidNodeJumps();
 </script>
 </body>
 </html>
