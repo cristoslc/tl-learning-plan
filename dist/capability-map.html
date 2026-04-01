@@ -397,11 +397,11 @@
   }
 
   .capability.completed.is-jump-target {
-    animation: capability-target-glow 1.6s ease-out;
+    animation: capability-target-glow 3.2s ease-out;
   }
 
   .capability.is-jump-target {
-    animation: capability-target-glow 1.6s ease-out;
+    animation: capability-target-glow 3.2s ease-out;
   }
 
   /* Card header — always visible */
@@ -1072,7 +1072,7 @@ function highlightCapabilityCard(card) {
   const timer = window.setTimeout(function() {
     card.classList.remove('is-jump-target');
     capabilityGlowTimers.delete(card);
-  }, 1700);
+  }, 3400);
 
   capabilityGlowTimers.set(card, timer);
 }
