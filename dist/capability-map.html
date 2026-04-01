@@ -372,9 +372,37 @@
     border-radius: var(--radius);
     margin-bottom: 0.75rem;
     box-shadow: var(--shadow);
+    scroll-margin-top: 1.15rem;
+    position: relative;
   }
 
   .capability.completed { border-color: var(--c6); }
+
+  @keyframes capability-target-glow {
+    0% {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 0 rgba(0, 4, 158, 0), 0 0 0 0 rgba(0, 4, 158, 0), var(--shadow);
+      background: var(--surface);
+    }
+    20% {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0, 4, 158, 0.12), 0 0 28px rgba(0, 4, 158, 0.2), var(--shadow);
+      background: rgba(0, 4, 158, 0.03);
+    }
+    100% {
+      border-color: var(--border);
+      box-shadow: var(--shadow);
+      background: var(--surface);
+    }
+  }
+
+  .capability.completed.is-jump-target {
+    animation: capability-target-glow 1.6s ease-out;
+  }
+
+  .capability.is-jump-target {
+    animation: capability-target-glow 1.6s ease-out;
+  }
 
   /* Card header — always visible */
   .cap-header {
@@ -1030,13 +1058,51 @@ function getCapabilityCard(id) {
   return document.getElementById(`capability-${id}`);
 }
 
+const capabilityGlowTimers = new WeakMap();
+const capabilityJumpOffset = 20;
+
+function highlightCapabilityCard(card) {
+  const priorTimer = capabilityGlowTimers.get(card);
+  if (priorTimer) window.clearTimeout(priorTimer);
+
+  card.classList.remove('is-jump-target');
+  void card.offsetWidth;
+  card.classList.add('is-jump-target');
+
+  const timer = window.setTimeout(function() {
+    card.classList.remove('is-jump-target');
+    capabilityGlowTimers.delete(card);
+  }, 1700);
+
+  capabilityGlowTimers.set(card, timer);
+}
+
+function scrollCapabilityCardIntoView(card) {
+  const container = document.querySelector('.content-pane');
+
+  if (!container || !container.contains(card)) {
+    card.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    return;
+  }
+
+  const containerRect = container.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  const targetTop = container.scrollTop + (cardRect.top - containerRect.top) - capabilityJumpOffset;
+
+  container.scrollTo({
+    top: Math.max(targetTop, 0),
+    behavior: 'smooth'
+  });
+}
+
 function jumpToCapability(id) {
   const card = getCapabilityCard(id);
   if (!card) return false;
 
-  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scrollCapabilityCardIntoView(card);
   card.setAttribute('tabindex', '-1');
   card.focus({ preventScroll: true });
+  highlightCapabilityCard(card);
 
   if (window.history && window.history.replaceState) {
     window.history.replaceState(null, '', `#capability-${id}`);
