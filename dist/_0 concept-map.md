@@ -1,6 +1,6 @@
 # TL Development Program — Capability Map
 
-> **DRAFT SKETCH — March 2026**
+> **March 2026**
 > A working capability map for Tech Lead development programs.
 > The capabilities are proposed, not final. The resources are curated starting points, not exhaustive.
 > What's missing? What's wrong? What would you add?
