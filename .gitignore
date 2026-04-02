@@ -4,3 +4,17 @@
 # Environment
 .env.local
 .swain-init
+
+# Agent runtime mirrors
+.claude/
+.goose/
+
+# Agent-generated logs
+.agents/*.log
+
+# Ticket runtime locks
+.tickets/.locks/
+
+# Python cache
+__pycache__/
+*.pyc
