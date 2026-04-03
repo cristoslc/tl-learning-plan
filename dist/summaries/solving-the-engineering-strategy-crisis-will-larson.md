@@ -1,7 +1,7 @@
 ---
 podcast_url: https://www.youtube.com/watch?v=vkfzpQ10eI4
-transcript_url:
-updated: 2026-03-28
+transcript_url: https://gist.github.com/cristoslc/e2a8962f7422f1769450186b9e6ef51c
+updated: 2026-04-02
 ---
 
 # Solving the Engineering Strategy Crisis — Will Larson
