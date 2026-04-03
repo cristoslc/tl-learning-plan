@@ -9,8 +9,13 @@
 .claude/
 .goose/
 
-# Agent-generated logs
+# Agent-generated logs and state
 .agents/*.log
+.agents/*.json
+
+# Generated documentation
+ROADMAP.md
+docs/*/Active/*/roadmap.md
 
 # Ticket runtime locks
 .tickets/.locks/
