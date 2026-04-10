@@ -1,0 +1,77 @@
+trove: assessment-design-placement-tests
+created: 2026-04-10
+refreshed: 2026-04-10
+tags:
+  - assessment
+  - placement-testing
+  - diagnostic-assessment
+  - adaptive-testing
+  - item-response-theory
+  - scaffolding
+  - self-directed-learning
+  - prior-knowledge
+  - pedagogy
+
+freshness-ttl:
+  web: 14d
+  document: 30d
+  media: never
+
+history:
+  - event: created
+    date: 2026-04-10
+    commit: "--"
+    sources: 7
+
+sources:
+  - source-id: "cal-placement-assessment-tools"
+    type: web
+    url: "https://www.cal.org/flad/post-secondary-world-language-assessment-module/placement-testing/types-of-placement-tests/"
+    fetched: 2026-04-10T14:00:00Z
+    title: "Types of Assessment Tools and Approaches for Placement"
+    hash: "96868653ddd9edac87bf131e3cc78075f29f5a93e2c4441a890438df56e6bb89"
+
+  - source-id: "ub-diagnostic-assessments"
+    type: web
+    url: "https://www.buffalo.edu/catt/teach/develop/design/designing-assessments/diagnostic-assessments.html"
+    fetched: 2026-04-10T14:05:00Z
+    title: "Diagnostic Assessments — University at Buffalo"
+    hash: "aa5fde866e44b24173551c5f9e917b90535421bc5031eb1c354d245846ad00c6"
+
+  - source-id: "ub-scaffolding-content"
+    type: web
+    url: "https://www.buffalo.edu/catt/teach/develop/build/scaffolding.html"
+    fetched: 2026-04-10T14:10:00Z
+    title: "Scaffolding Content — University at Buffalo"
+    hash: "97d9a27a2fc1a9ba43d255e2a5059639864b7f91e66fef90d4b22466ba16b555"
+
+  - source-id: "cogn-iq-adaptive-testing"
+    type: web
+    url: "https://www.cogn-iq.org/learn/theory/adaptive-testing/"
+    fetched: 2026-04-10T14:15:00Z
+    title: "Adaptive Testing in Psychometrics — Definition & Examples"
+    hash: "1ed15af881d4d761bbed61f61c297836680a72b19b83da6cae844aeace142188"
+
+  - source-id: "saxon-morante-placement-challenges"
+    type: document
+    url: "https://files.eric.ed.gov/fulltext/EJ1320870.pdf"
+    fetched: 2026-04-10T14:20:00Z
+    title: "Effective Student Assessment and Placement: Challenges and Recommendations"
+    hash: "04cf3bf46337ea72610e8adb3aaf78ade3e5a648555731a3126c77328768a649"
+    notes: "Originally published in Journal of Developmental Education, Vol 37 Issue 3 (2014); reprinted Vol 44 Issue 3, Spring 2021"
+
+  - source-id: "khiat-self-directed-learning-diagnostic"
+    type: document
+    url: "https://files.eric.ed.gov/fulltext/EJ1072396.pdf"
+    fetched: 2026-04-10T14:25:00Z
+    title: "Measuring Self-Directed Learning: A Diagnostic Tool for Adult Learners"
+    hash: "2035d2f75c9b642b79d0a6851670df7b28e585be2cc8d84c156baf0a85c09864"
+    notes: "Journal of University Teaching & Learning Practice, Volume 12, Issue 2, 2015"
+
+  - source-id: "schwarz-adaptive-competency-placement"
+    type: web
+    url: "https://link.springer.com/chapter/10.1007/978-3-031-93409-4_15"
+    fetched: 2026-04-10T14:30:00Z
+    title: "A Computerized Adaptive Competency-Based Placement Test to Determine the Optimal Entry Point in Online Courses"
+    hash: "dbcc93e81ac8275627adbc73e73ff204267c2b87f29d4b97a2636b715228f133"
+    notes: "Paywalled — abstract and references only. AIEER 2024, CCIS vol 2519, Springer, 2025"
