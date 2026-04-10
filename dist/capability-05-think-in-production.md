@@ -2,7 +2,7 @@
 
 [Back to Capability Map](concept-map)
 
-**The situation:** The architecture looks good on the whiteboard. The design review passed. Then it ships, and you discover there's no way to tell if offline sync is silently dropping records, no runbook for when the data pipeline stalls, and the only person who knows how the reconciliation service works is on vacation.
+**The situation:** The architecture looks good on the whiteboard. The design review passed. Then it ships, and you discover there's no way to tell if the message queue is silently dropping events, no runbook for when the data pipeline stalls, and the only person who knows how the payment retry service works is on vacation.
 
 **What changes:** You learn to design for day 2, not just day 1. Every service needs answers to: how do I know it's healthy? How do I know it's broken? What does the operator do when it breaks? How do I deploy a fix without downtime? You stop treating observability and operability as things you add after launch and start treating them as constraints that shape the design.
 

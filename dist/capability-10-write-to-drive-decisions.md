@@ -25,4 +25,4 @@
 
 ### Practice This
 
-Pick one architectural decision facing your team's platform (e.g., offline-first vs cloud-first for field data, build vs buy for report generation). Write a one-page decision document: context, options considered, recommendation, trade-offs, what you're giving up. Share it with a colleague and ask them to disagree with one specific point.
+Pick one architectural decision facing your team (e.g., synchronous vs async for cross-service workflows, build vs buy for report generation). Write a one-page decision document: context, options considered, recommendation, trade-offs, what you're giving up. Share it with a colleague and ask them to disagree with one specific point.

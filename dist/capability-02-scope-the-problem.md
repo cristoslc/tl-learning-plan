@@ -2,7 +2,7 @@
 
 [Back to Capability Map](concept-map)
 
-**The situation:** There's a vague mandate: "build the new platform." Or a specific one that's actually three problems wearing a trenchcoat. Everyone has opinions about what to build. Nobody has explicitly decided what's out of scope. You're six weeks into design before someone realizes half the team assumed offline sync was in scope and the other half assumed it wasn't.
+**The situation:** There's a vague mandate: "build a new platform." Or a specific one that's actually three problems wearing a trenchcoat. Everyone has opinions about what to build. Nobody has explicitly decided what's out of scope. You're six weeks into design before someone realizes half the team assumed mobile support was in scope and the other half assumed it wasn't.
 
 **What changes:** You learn to frame problems before solving them. What's the actual question? Who are we building for first? What would we *not* build even if we could? You develop the discipline of writing a scope statement that's specific enough to be wrong — "MVP supports core services and product lines A, B, and C; remaining lines are post-launch" — so it can be debated and refined rather than left ambiguous.
 

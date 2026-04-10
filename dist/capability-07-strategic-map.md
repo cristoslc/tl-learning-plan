@@ -14,7 +14,7 @@
 |----------|--------|------|-------------|
 | [Engineering strategy](https://lethain.com/engineering-strategy/) — Will Larson | Article | 15 min | How strategy actually forms: accumulated design decisions synthesized into direction. Not top-down visionary planning — bottom-up sense-making. This is the skill. |
 | [Things You Should Never Do, Part I](https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/) — Joel Spolsky | Article | 10 min | The classic argument against rewrites. Read this first, then the counterpoint next — together they frame the "build alongside, don't throw away" approach. |
-| [Lessons from 6 Software Rewrite Stories](https://medium.com/@herbcaudill/lessons-from-6-software-rewrite-stories-635e4c8f7c22) — Herb Caudill | Article | 25 min | The counterpoint: six real rewrites (Basecamp, VS Code, Gmail/Inbox, etc.) show that building new alongside old often works. The "new platform alongside legacy" approach fits this pattern. |
+| [Lessons from 6 Software Rewrite Stories](https://medium.com/@herbcaudill/lessons-from-6-software-rewrite-stories-635e4c8f7c22) — Herb Caudill | Article | 25 min | The counterpoint: six real rewrites (Basecamp, VS Code, Gmail/Inbox, etc.) show that building new alongside old often works. The "build new alongside old" approach fits this pattern. |
 
 ### Go deeper
 
@@ -38,4 +38,4 @@
 
 ### Practice This
 
-Pick one of your organization's strategic bets (language standardization, master data management, data products, the new platform itself). Write a 2-minute explanation of *why* — not what the decision is, but what problem it solves and what would happen if the organization didn't make this bet. Test it on a colleague who isn't in this program.
+Pick one of your organization's strategic bets (language standardization, master data management, data products, a platform migration). Write a 2-minute explanation of *why* — not what the decision is, but what problem it solves and what would happen if the organization didn't make this bet. Test it on a colleague who isn't in this program.
