@@ -12,6 +12,7 @@
 
 | Resource | Format | Time | Why this one |
 |----------|--------|------|-------------|
+| [The Architect Elevator — Visiting the Upper Floors](https://martinfowler.com/articles/architect-elevator.html) — Gregor Hohpe | Article | 15 min | Why developers need to understand business architecture. How architects translate between business strategy (capabilities, value chains) and technical execution (services, platforms). Sets the mental model. |
 | [Decompose by Business Capability](https://microservices.io/patterns/decomposition/decompose-by-business-capability.html) — Chris Richardson | Article | 10 min | The canonical pattern for defining services around business capabilities. Shows how to identify capabilities and decompose an application into services that each own one. |
 | [Legacy Architecture Modernisation with Strategic DDD](https://medium.com/nick-tune-tech-strategy-blog/legacy-architecture-modernisation-with-strategic-domain-driven-design-3e7c05bb383f) — Nick Tune | Article | 15 min | The full flow from business capabilities to bounded contexts to platform architecture. Shows how the capability map becomes the starting point for service and platform design — the bridge from "what the business does" to "what the platform builds." |
 
