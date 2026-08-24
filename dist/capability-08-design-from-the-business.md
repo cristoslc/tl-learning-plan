@@ -12,7 +12,7 @@
 
 | Resource | Format | Time | Why this one |
 |----------|--------|------|-------------|
-| [Identify Business Capabilities](https://martinfowler.com/articles/patterns-legacy-displacement/identify-business-capabilities.html) — Cartwright, Horn & Lewis | Article | 15 min | Practical guide to identifying business capabilities as the first step in architecture. Shows how to decompose an organization into stable capability units. |
+| [Decompose by Business Capability](https://microservices.io/patterns/decomposition/decompose-by-business-capability.html) — Chris Richardson | Article | 10 min | The canonical pattern for defining services around business capabilities. Shows how to identify capabilities and decompose an application into services that each own one. |
 
 ### Go deeper
 
