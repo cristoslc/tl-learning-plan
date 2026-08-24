@@ -13,6 +13,7 @@
 | Resource | Format | Time | Why this one |
 |----------|--------|------|-------------|
 | [Decompose by Business Capability](https://microservices.io/patterns/decomposition/decompose-by-business-capability.html) — Chris Richardson | Article | 10 min | The canonical pattern for defining services around business capabilities. Shows how to identify capabilities and decompose an application into services that each own one. |
+| [Legacy Architecture Modernisation with Strategic DDD](https://medium.com/nick-tune-tech-strategy-blog/legacy-architecture-modernisation-with-strategic-domain-driven-design-3e7c05bb383f) — Nick Tune | Article | 15 min | The full flow from business capabilities to bounded contexts to platform architecture. Shows how the capability map becomes the starting point for service and platform design — the bridge from "what the business does" to "what the platform builds." |
 
 ### Go deeper
 
@@ -23,7 +24,6 @@
 | [Introduction to Value Chain Mapping](https://www.youtube.com/watch?v=NnFeIt-uaEc) — Simon Wardley ([summary](https://github.com/cristoslc/tl-learning-plan/blob/main/dist/summaries/introduction-to-value-chain-mapping-simon-wardley.md)) | Video | 40 min | Wardley's foundational talk: why value chain position determines what to build, buy, or outsource. The evolution dimension the capability map doesn't give you. |
 | [Wardley Maps (free book) — Ch 1-2](https://learnwardleymapping.com/book/) — Simon Wardley | Guide | ~60 min | Chapters 1 ("On Being Lost") and 2 ("Finding a Path"). The complete on-ramp to Wardley mapping. Free, CC-licensed. |
 | [Use Domain Analysis to Model Microservices](https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis) — Azure Architecture Center | Article | 20 min | The full chain from capability identification to bounded context definition to service design. Uses a concrete example. Bridge between Capability 7 and Capability 3. |
-| [Legacy Architecture Modernisation with Strategic DDD](https://medium.com/nick-tune-tech-strategy-blog/legacy-architecture-modernisation-with-strategic-domain-driven-design-3e7c05bb383f) — Nick Tune | Article | 15 min | Business capability analysis as the starting point for bounded contexts. Bridges capability mapping, EventStorming, and the Bounded Context Canvas. |
 | [Core Domain Patterns](https://medium.com/nick-tune-tech-strategy-blog/core-domain-patterns-941f89446af5) — Nick Tune | Article | 10 min | Core Domain Charts: classify capabilities as core, supporting, or generic. Plot by complexity and differentiation. Directly informs build/buy/outsource decisions. |
 
 ### Practice This
