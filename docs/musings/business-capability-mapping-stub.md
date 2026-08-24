@@ -9,24 +9,24 @@ Capability 8 on the learning plan lists Martin Fowler's *"Identify Business Capa
 ## Fully-fleshed-out substitutes found
 
 Same authors (Cartwright, Horn, Lewis):
-- **Thoughtworks "Patterns of Legacy Displacement" podcast Part 2** — Lewis verbally explains business capabilities in the legacy-displacement context; closest to the "why/what" of the stub.
+- **Thoughtworks "Patterns of Legacy Displacement" podcast Part 2** — Lewis verbally explains business capabilities in the legacy-displacement context; closest to the "why/what" of the stub. https://www.thoughtworks.com/insights/podcasts/technology-podcasts/patterns-legacy-displacement-pt1
 - **GOTO Copenhagen 2022 talk** (Horn & Cartwright) — same pattern clusters incl. business capability identification.
-- **Main "Patterns of Legacy Displacement" hub article** — fleshed out; covers capability mapping alongside Event Storming / Wardley Mapping / Domain Mapping; "find seams... considering how elements map to different business capabilities."
-- **"Create Town Plan" sibling stub** — more developed than the target stub: gives a working definition ("people, processes and tools that describe a stable boundary within a business"), core-banking examples, town-planning metaphor.
+- **Main "Patterns of Legacy Displacement" hub article** — fleshed out; covers capability mapping alongside Event Storming / Wardley Mapping / Domain Mapping; "find seams... considering how elements map to different business capabilities." https://martinfowler.com/articles/patterns-legacy-displacement/
+- **"Create Town Plan" sibling stub** — more developed than the target stub: gives a working definition ("people, processes and tools that describe a stable boundary within a business"), core-banking examples, town-planning metaphor. https://martinfowler.com/articles/patterns-legacy-displacement/create-town-plan.html
 
 Other authors:
 - **Ian Cooper — "Capability Mapping" (NDC)** — full talk on identifying business capabilities for microservices.
-- **Thoughtworks blog — "How to Keep Large Projects on Track with Business Capability Mapping"** — detailed 6-step process (independent research → validation sessions → visualization → workshop → facilitation → maintenance), red-flag catalog, "Goldilocks" principle.
-- **Sriram Narayan — "Business Capability Centric" (martinfowler.com)** — cleanest definition with e-commerce/insurance/telecom examples; strategic vs. utility distinction.
-- **Chris Richardson** — microservices.io "Decompose by Business Capability."
+- **Thoughtworks blog — "How to Keep Large Projects on Track with Business Capability Mapping"** — detailed 6-step process (independent research → validation sessions → visualization → workshop → facilitation → maintenance), red-flag catalog, "Goldilocks" principle. https://www.thoughtworks.com/en-us/insights/blog/legacy-modernization/keeping-large-projects-on-track-with-business-capability-mapping
+- **Sriram Narayan — "Business Capability Centric" (martinfowler.com)** — cleanest definition with e-commerce/insurance/telecom examples; strategic vs. utility distinction. https://martinfowler.com/bliki/BusinessCapabilityCentric.html
+- **Chris Richardson** — microservices.io "Decompose by Business Capability." https://microservices.io/patterns/decomposition/decompose-by-business-capability.html
 - **Sam Newman — *Building Microservices*** (2nd ed).
 
 ## The concrete "what does a capability look like" angle (flow: capabilities → shared platform services → bounded contexts)
 
 The deepest answer to the research conversation's follow-up:
-- **Trond Hjorteland — "From Capabilities to Services Modelling" (SlideShare)** — best match for the capabilities → shared platform services flow, with real maps (Norwegian Labour & Welfare, ISP) and the Udi Dahan quote "a service is the technical authority for a specific business capability."
-- **Nick Tune — "Product-aligned vs Capability-aligned Organization Design"** — clearest concrete illustration (supermarket: physical store/online/mobile each re-implementing user management, loyalty, order management → capability-aligned shared services); includes trade-offs and failure modes (selfish silos, over-complex generic capabilities, empire building, adoption, funding).
-- **Nick Tune — "Legacy Architecture Modernisation with Strategic DDD"** — the full flow: Business Model Canvas → Wardley → IT portfolio (Core Domain Charts) → EventStorming → Bounded Contexts → Platform Architecture.
+- **Trond Hjorteland — "From Capabilities to Services Modelling" (SlideShare)** — best match for the capabilities → shared platform services flow, with real maps (Norwegian Labour & Welfare, ISP) and the Udi Dahan quote "a service is the technical authority for a specific business capability." https://www.slideshare.net/trondhr/from-capabilities-to-services-modelling-for-businessit-alignment-v2
+- **Nick Tune — "Product-aligned vs Capability-aligned Organization Design"** — clearest concrete illustration (supermarket: physical store/online/mobile each re-implementing user management, loyalty, order management → capability-aligned shared services); includes trade-offs and failure modes (selfish silos, over-complex generic capabilities, empire building, adoption, funding). https://medium.com/nick-tune-tech-strategy-blog/product-aligned-vs-capability-aligned-organisation-design-99309596adde
+- **Nick Tune — "Legacy Architecture Modernisation with Strategic DDD"** — the full flow: Business Model Canvas → Wardley → IT portfolio (Core Domain Charts) → EventStorming → Bounded Contexts → Platform Architecture. https://medium.com/nick-tune-tech-strategy-blog/legacy-architecture-modernisation-with-strategic-domain-driven-design-3e7c05bb383f
 
 ## Why no one has written the end-to-end synthesis
 
