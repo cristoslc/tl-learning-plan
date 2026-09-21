@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.1 — 2026-09-21
+
+### What shipped
+
+#### "Patterns of Legacy Displacement" Worked Into Three Capabilities
+
+Cartwright, Horn & Lewis's legacy-modernization article (martinfowler.com) is now placed in:
+
+- **Capability 2 (Scope the Problem)** — the "Breaking the Problem into Smaller Parts" section: seams, thin slices, Feature Parity/big-bang as anti-patterns
+- **Capability 7 (Read the Strategic Map)** — the full article: why legacy replacements fail (treadmill, BAU-vs-programme drift) and how to sequence outcomes → seams → delivery → org change
+- **Capability 3 (Find the Real Boundaries)** — the same seams section as boundary discovery in legacy estates, alongside the existing Event Storming resource
+
+Section-anchored URLs for Capabilities 2 and 3; whole article for Capability 7. No media summary — article resources are not summarized in this program. (Issue #4)
+
 ## 1.1.0 — 2026-04-10
 
 ### What shipped
