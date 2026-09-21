@@ -35,6 +35,7 @@
 | [Hohpe Ch 26: Reverse Engineering Organizations](https://learning.oreilly.com/library/view/the-software-architect/9781492077534/ch26.html) — Gregor Hohpe | Book | ~20 min | Applying architectural analysis to understand why an organization makes the decisions it does. The diagnostic skill behind "read the strategic map." |
 | [Larson §3.3: Visions and strategies](https://learning.oreilly.com/library/view/an-elegant-puzzle/9781492077930/ch03.html#visions_and_strategies) — Will Larson | Book | ~20 min | How to write and use strategy and vision documents. The structural companion to Larson's blog posts on engineering strategy. |
 | [Larson §3.6: Migrations](https://learning.oreilly.com/library/view/an-elegant-puzzle/9781492077930/ch03.html#migrations_the_sole_scalable_fix_to_tech) — Will Larson | Book | ~25 min | Migrations as the sole scalable fix to tech debt. Directly relevant to legacy-to-new-platform migrations — how to run a migration that actually completes. |
+| [Patterns of Legacy Displacement](https://martinfowler.com/articles/patterns-legacy-displacement/) — Cartwright, Horn & Lewis | Article | ~45 min | Why legacy replacements fail (treadmill, BAU-vs-programme drift, Feature Parity) and how to sequence outcomes → seams → delivery → org change. The pattern-level companion to the rewrite-debate pair at the top of this capability. |
 
 ### Practice This
 

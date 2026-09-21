@@ -20,6 +20,7 @@
 | Resource | Format | Time | What it adds |
 |----------|--------|------|-------------|
 | [Core Domain Patterns](https://medium.com/nick-tune-tech-strategy-blog/core-domain-patterns-941f89446af5) — Nick Tune | Article | 10 min | Core Domain Charts: classify capabilities as core (build), supporting (buy), or generic (outsource). Structured scoping. |
+| [Patterns of Legacy Displacement: Breaking the Problem into Smaller Parts](https://martinfowler.com/articles/patterns-legacy-displacement/#DecideHowToBreakTheProblemIntoSmallerParts) — Cartwright, Horn & Lewis | Article | 15 min | Find seams, extract thin slices deliverable with minimal dependencies, and why the alternatives (Feature Parity, big bang) keep organizations on the replacement treadmill. Scoping for the special case of replacing a legacy system. |
 | [FSA Ch 5: Identifying Architectural Characteristics](https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch05.html) — Richards & Ford | Book | ~30 min | Extracting architectural priorities from domain concerns. The fewest characteristics necessary — scoping applied to architecture. |
 | [FSA Ch 19: Architecture Decisions](https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/ch19.html) — Richards & Ford | Book | ~35 min | ADRs as scope artifacts: documenting what was decided, why, and what was rejected. Anti-patterns: Covering Your Assets, Groundhog Day. |
 
